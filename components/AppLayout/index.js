@@ -3,36 +3,37 @@ import { fonts, colors } from "../../styles/theme";
 const AppLayout = ({children}) => {
     return (
         <>
-            <div className="container">
+            <div>
             <main>
                 {children}
             </main>
             </div>
             
 
-
             <style jsx>{`
 
-                .container {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+                div {
+                    display: grid;
+                    place-items: center;
                     height: 100vh;
-                    background-color: grey;
+                    background-color: ${colors.primary};
                 }
 
                 main { 
                 background-color: white;
+                padding: 1.5rem;
                 height: 100vh;
                 width: 100vw;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+                
                 }
 
                 @media (min-width: 425px) {
                     main {
                         height: 90vh;
+                        width: 500px;
+
                     }
                 }
 

@@ -1,5 +1,8 @@
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
+import Button from '../components/Button';
+import GitHub from '../components/Icons/Github';
+import { fonts, colors } from '../styles/theme';
 
 export default function Home() {
   return (
@@ -11,8 +14,48 @@ export default function Home() {
       </Head>
 
       <AppLayout>
-        <h1>Welcome to Next</h1>
+        <section>
+          <img src="./images/logo.png" alt="Logo" />
+          <h1>Devter</h1>
+          <h2>Talk about development with developers</h2>
+          <div className='btn-container'>
+            <Button>
+              <GitHub width={24} height={24} fill={'#fff'} />
+              Login with Github
+            </Button>
+          </div>
+        </section>
       </AppLayout>
+
+
+      <style jsx>{`
+      img {
+        height: 60px;
+      }
+
+      section {
+        display: grid;
+        height: 100%;
+        place-content: center;
+        place-items: center;
+      }
+
+      h1 {
+        color: ${colors.primary};
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+
+      h2 {
+        color: ${colors.secondary};
+        font-size: 1.3rem;
+      }
+
+      .btn-container {
+        margin-top: .5rem;
+      }
+      
+      `}</style>
       
 
     </div>
