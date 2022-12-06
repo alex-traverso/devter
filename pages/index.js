@@ -1,10 +1,29 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import Button from '../components/Button';
 import GitHub from '../components/Icons/Github';
 import { fonts, colors } from '../styles/theme';
 
+//Firebase Client
+import app from '../firebase/client';
+import { loginWithGithub } from '/firebase/client.js';
+
+
 export default function Home() {
+
+  const { user, setUser } = useState( null );
+
+  const handleClick = () => {
+    loginWithGithub().then( user => {
+      const { avatar, username, url } = user;
+      console.log( user );
+    } ).catch( err => {
+      console.log( err );
+    } )
+  }
+  
+
   return (
     <div>
       <Head>
@@ -15,11 +34,11 @@ export default function Home() {
 
       <AppLayout>
         <section>
-          <img src="./images/logo.png" alt="Logo" />
+          <img src="./images/twitter-logo.png" alt="Logo" />
           <h1>Devter</h1>
-          <h2>Talk about development with developers</h2>
+          <h2>Talk about development <br></br>with developers</h2>
           <div className='btn-container'>
-            <Button>
+            <Button onClick={handleClick}>
               <GitHub width={24} height={24} fill={'#fff'} />
               Login with Github
             </Button>
@@ -49,10 +68,11 @@ export default function Home() {
       h2 {
         color: ${colors.secondary};
         font-size: 1.3rem;
+        text-align:center;
       }
 
       .btn-container {
-        margin-top: .5rem;
+        margin-top: .3rem;
       }
       
       `}</style>

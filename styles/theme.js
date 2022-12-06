@@ -7,5 +7,5 @@ export const colors = {
     dark: '#121212',
     white: '#ffffff',
     primary: '#439ACF',
-    secondary: '#085B93'
+    secondary: '#007BBB'
 }
