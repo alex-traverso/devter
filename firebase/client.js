@@ -9,15 +9,15 @@ const firebaseConfig = {
     messagingSenderId: "379746049782",
     appId: "1:379746049782:web:b25d8c40221489baf556d7",
     measurementId: "G-YXELZ3LBCJ"
-};
+}
 
-const app = initializeApp( firebaseConfig );
-const auth = getAuth();
+const app = initializeApp( firebaseConfig )
+const auth = getAuth()
 
 
 
 const mapUserFromFirebaseAuth = ( response ) => {
-    const user = response.user;
+    const user = response.user
     const { displayName, email, photoURL } = user;
     
     return {

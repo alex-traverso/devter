@@ -1,29 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import Head from 'next/head';
-import AppLayout from '../components/AppLayout';
-import Button from '../components/Button';
-import GitHub from '../components/Icons/Github';
-import { fonts, colors } from '../styles/theme';
+import { useEffect, useState } from 'react'
+import Head from 'next/head'
+import AppLayout from '../components/AppLayout'
+import Button from '../components/Button'
+import GitHub from '../components/Icons/Github'
+import { colors } from '../styles/theme'
 
-//Firebase Client
-import app from '../firebase/client';
-import { loginWithGithub, authChange } from '/firebase/client.js';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-
-
+//  Firebase Client
+import { loginWithGithub, authChange } from '/firebase/client.js'
 
 export default function Home() {
-
+  
   const [user, setUser] = useState( null );
   
   useEffect( () => {
-    authChange( setUser( user ) );
+    authChange( setUser( user ));
   }, [])
-  
+
 
   const handleClick = () => {
     loginWithGithub().then( user => {
-      const { name, email, avatar  } = user;
       setUser( user );
       console.log( user );
     }).catch( err => {
@@ -66,7 +61,7 @@ export default function Home() {
       </AppLayout>
 
 
-      <style jsx>{`
+    <style jsx>{`
       img {
         height: 60px;
       }
