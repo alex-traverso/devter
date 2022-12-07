@@ -18,11 +18,6 @@ export default function Home() {
   
   useEffect( () => {
     authChange( setUser( user ) );
-    /* const auth = getAuth();
-    onAuthStateChanged( auth, ( user ) => {
-      setUser( user );
-      console.log( user );
-    } ) */
   }, [])
   
 
