@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import Button from '../components/Button';
@@ -7,20 +7,33 @@ import { fonts, colors } from '../styles/theme';
 
 //Firebase Client
 import app from '../firebase/client';
-import { loginWithGithub } from '/firebase/client.js';
+import { loginWithGithub, authChange } from '/firebase/client.js';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 
 export default function Home() {
 
-  const { user, setUser } = useState( null );
+  const [user, setUser] = useState( null );
+  
+  useEffect( () => {
+    authChange( setUser( user ) );
+    /* const auth = getAuth();
+    onAuthStateChanged( auth, ( user ) => {
+      setUser( user );
+      console.log( user );
+    } ) */
+  }, [])
+  
 
   const handleClick = () => {
     loginWithGithub().then( user => {
-      const { avatar, username, url } = user;
+      const { name, email, avatar  } = user;
+      setUser( user );
       console.log( user );
-    } ).catch( err => {
+    }).catch( err => {
       console.log( err );
-    } )
+    })
   }
   
 
@@ -37,11 +50,22 @@ export default function Home() {
           <img src="./images/twitter-logo.png" alt="Logo" />
           <h1>Devter</h1>
           <h2>Talk about development <br></br>with developers</h2>
-          <div className='btn-container'>
-            <Button onClick={handleClick}>
+          <div>
+            {
+              user === null &&
+              <Button onClick={handleClick}>
               <GitHub width={24} height={24} fill={'#fff'} />
-              Login with Github
-            </Button>
+                Login with Github
+              </Button>
+            }
+            
+            {
+            user && user.avatar &&
+            <div>
+              <img src={user.avatar} />
+              <p>{ user.name }</p>
+            </div>
+            }
           </div>
         </section>
       </AppLayout>
@@ -77,7 +101,6 @@ export default function Home() {
       
       `}</style>
       
-
     </div>
   )
 }
