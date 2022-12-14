@@ -13,6 +13,7 @@ const Avatar = ({ src, alt, text }) => {
         img {
           height: 60px;
           width: 60px;
+          object-fit: cover;
           border-radius: 9999px;
         }
 

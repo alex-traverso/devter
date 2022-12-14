@@ -1,6 +1,6 @@
-import AppLayout from "../../components/AppLayout";
-
 import { useState, useEffect } from "react";
+import AppLayout from "../../components/AppLayout";
+import Devit from "../../components/Devit";
 
 const HomePage = () => {
   const [timeline, setTimeline] = useState([]);
@@ -8,8 +8,7 @@ const HomePage = () => {
   useEffect(() => {
     fetch("http://localhost:3000/api/statuses/home_timeline")
       .then((res) => res.json())
-      .then(setTimeline(timeline));
-    console.log(timeline);
+      .then(setTimeline);
   }, []);
 
   return (
@@ -19,17 +18,15 @@ const HomePage = () => {
           <h2>Inicio</h2>
         </header>
         <section>
-          {timeline.map((devit) => {
-            return (
-              <article>
-                <Avatar
-                  key={devit.id}
-                  src={devit.avatar}
-                  alt={devit.username}
-                />
-              </article>
-            );
-          })}
+          {timeline.map(({ id, username, avatar, message }) => (
+            <Devit
+              key={id}
+              username={username}
+              avatar={avatar}
+              message={message}
+              id={id}
+            />
+          ))}
         </section>
         <nav></nav>
       </AppLayout>
@@ -59,7 +56,7 @@ const HomePage = () => {
           }
 
           section {
-            padding-top: 100px;
+            padding-top: 49px;
           }
         `}
       </style>
