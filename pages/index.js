@@ -3,6 +3,8 @@ import Head from "next/head";
 import AppLayout from "../components/AppLayout";
 import Button from "../components/Button";
 import GitHub from "../components/Icons/Github";
+import Logo from "../components/Icons/Logo";
+import Avatar from "../components/Avatar";
 import { colors } from "../styles/theme";
 
 //  Firebase Client
@@ -36,7 +38,7 @@ export default function Home() {
 
       <AppLayout>
         <section>
-          <img src='./images/twitter-logo.png' alt='Logo' />
+          <Logo alt='logo' height={90} />
           <h1>Devter</h1>
           <h2>
             Talk about development <br></br>with developers
@@ -50,10 +52,7 @@ export default function Home() {
             )}
 
             {user && user.avatar && (
-              <div>
-                <img src={user.avatar} />
-                <p>{user.name}</p>
-              </div>
+              <Avatar src={user.avatar} alt={user.name} text={user.name} />
             )}
           </div>
         </section>
@@ -63,7 +62,6 @@ export default function Home() {
         img {
           height: 60px;
         }
-
         section {
           display: grid;
           height: 100%;

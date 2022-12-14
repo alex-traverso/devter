@@ -8,7 +8,8 @@ const HomePage = () => {
   useEffect(() => {
     fetch("http://localhost:3000/api/statuses/home_timeline")
       .then((res) => res.json())
-      .then(setTimeline);
+      .then(setTimeline(timeline));
+    console.log(timeline);
   }, []);
 
   return (
@@ -18,10 +19,14 @@ const HomePage = () => {
           <h2>Inicio</h2>
         </header>
         <section>
-          {timeline.map((devit, index) => {
+          {timeline.map((devit) => {
             return (
               <article>
-                <Avatar src={devit.avatar} alt={devit.username} />
+                <Avatar
+                  key={devit.id}
+                  src={devit.avatar}
+                  alt={devit.username}
+                />
               </article>
             );
           })}

@@ -33,9 +33,3 @@ const timeline = [
 export default function (req, res) {
   res.status(200).json({ timeline });
 }
-
-/* export default ( req, res ) => {
-    res.statusCode = 200
-    res.setHeader( "Content-Type", "application/json" )
-    res.send( JSON.stringify( timeline ) )
-}; */
