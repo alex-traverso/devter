@@ -39,39 +39,6 @@ export const authChange = () => {
   };
 };
 
-/* export const onAuthStateChanged = (onChange) => {
-return getAuth(app).onAuthStateChanged((user) => {
-const normalizedUser = user ? mapUserFromFirebaseAuthToUser(user) : null
-onChange(normalizedUser)
-})
-} */
-
-/* export const authChange = (onChange) => {
-    onAuthStateChanged( auth, ( user ) => {
-
-        const normalizedUser = mapUserFromFirebaseAuth( user );
-        console.log( normalizedUser );
-
-        const { displayName, email, photoURL } = user;
-    
-        const newUser = {
-        name: displayName,
-        email: email,
-        avatar: photoURL,
-        }
-        return newUser;
-});
-} */
-
-//OTRA FORMA DE HACER LA FUNCION AUTHCHANGE
-/* export const authChange = ( onChange ) => {
-    return onAuthStateChanged( auth, ( response ) => {
-        const normalizedUser = mapUserFromFirebaseAuth( response );
-        onChange( normalizedUser );
-        console.log( "Sign In" );
-});
-} */
-
 export const loginWithGithub = () => {
   const provider = new GithubAuthProvider();
   return signInWithPopup(auth, provider).then((response) => {

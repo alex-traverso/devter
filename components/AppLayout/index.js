@@ -13,7 +13,7 @@ const AppLayout = ({ children }) => {
             display: grid;
             place-items: center;
             height: 100vh;
-            background-color: ${colors.primary};
+            background-color: ${colors.grey};
           }
 
           main {

@@ -1,13 +1,31 @@
 import AppLayout from "../../components/AppLayout";
 
+import { useState, useEffect } from "react";
+
 const HomePage = () => {
+  const [timeline, setTimeline] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/statuses/home_timeline")
+      .then((res) => res.json())
+      .then(setTimeline);
+  }, []);
+
   return (
     <>
       <AppLayout>
         <header>
           <h2>Inicio</h2>
         </header>
-        <section></section>
+        <section>
+          {timeline.map((devit, index) => {
+            return (
+              <article>
+                <Avatar src={devit.avatar} alt={devit.username} />
+              </article>
+            );
+          })}
+        </section>
         <nav></nav>
       </AppLayout>
 
