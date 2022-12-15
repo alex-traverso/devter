@@ -19,8 +19,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-const mapUserFromFirebaseAuth = (response) => {
-  const user = response.user;
+const mapUserFromFirebaseAuthToUser = (user) => {
   const { displayName, email, photoURL } = user;
 
   return {
@@ -30,19 +29,17 @@ const mapUserFromFirebaseAuth = (response) => {
   };
 };
 
-export const authChange = () => {
-  const onAuthStateChanged = (onChange) => {
-    return getAuth(app).onAuthStateChanged((user) => {
-      const normalizedUser = user ? mapUserFromFirebaseAuth(user) : null;
-      onChange(normalizedUser);
-    });
-  };
+export const authChange = (onChange) => {
+  return getAuth(app).onAuthStateChanged((user) => {
+    const normalizedUser = user ? mapUserFromFirebaseAuthToUser(user) : null;
+    onChange(normalizedUser);
+  });
 };
 
 export const loginWithGithub = () => {
   const provider = new GithubAuthProvider();
   return signInWithPopup(auth, provider).then((response) => {
-    return mapUserFromFirebaseAuth(response);
+    return mapUserFromFirebaseAuthToUser(response);
   });
 };
 

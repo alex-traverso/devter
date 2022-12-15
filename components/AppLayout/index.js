@@ -20,12 +20,19 @@ const AppLayout = ({ children }) => {
             background-color: white;
             padding: 1.5rem;
             height: 100vh;
-            width: 100vw;
+            width: 100%;
             border-radius: 10px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
           }
 
           @media (min-width: 425px) {
+            main {
+              height: 90vh;
+              width: 300px;
+            }
+          }
+
+          @media (min-width: 768px) {
             main {
               height: 90vh;
               width: 500px;

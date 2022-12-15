@@ -6,16 +6,24 @@ import GitHub from "../components/Icons/Github";
 import Logo from "../components/Icons/Logo";
 import Avatar from "../components/Avatar";
 import { colors } from "../styles/theme";
+import Loading from "../components/Loading";
 
 //  Firebase Client
 import { loginWithGithub, authChange } from "/firebase/client.js";
 
+//Router
+import Router from "next/router";
+
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    authChange(setUser(user));
+    authChange(setUser);
   }, []);
+
+  useEffect(() => {
+    user && Router.replace("/home");
+  }, [user]);
 
   const handleClick = () => {
     loginWithGithub()
@@ -52,8 +60,12 @@ export default function Home() {
             )}
 
             {user && user.avatar && (
-              <Avatar src={user.avatar} alt={user.name} text={user.name} />
+              <div>
+                <Avatar alt={user.name} src={user.avatar} text={user.name} />
+              </div>
             )}
+
+            {user === undefined && <Loading />}
           </div>
         </section>
       </AppLayout>
@@ -83,6 +95,10 @@ export default function Home() {
 
         .btn-container {
           margin-top: 0.3rem;
+        }
+
+        .loading {
+          height: 30px;
         }
       `}</style>
     </div>

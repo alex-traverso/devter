@@ -18,6 +18,7 @@ export default function Devit({ id, avatar, username, message }) {
         article {
           display: flex;
           padding: 10px 15px;
+          border-bottom: 2px solid #eaf7ff;
         }
 
         div {
@@ -25,6 +26,7 @@ export default function Devit({ id, avatar, username, message }) {
         }
 
         p {
+          line-height: 1.3125;
           margin: 0;
         }
       `}</style>

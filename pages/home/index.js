@@ -34,11 +34,13 @@ const HomePage = () => {
       <style jsx>
         {`
           header {
+            display: flex;
+            align-items: center;
             top: 0;
-            left: 0;
             border-bottom: 1px solid #ccc;
-            height: 55px;
-            position: fixed;
+            background-color: white;
+            height: 49px;
+            position: sticky;
             width: 100%;
           }
 
@@ -50,7 +52,7 @@ const HomePage = () => {
             bottom: 0;
             left: 0;
             border-top: 1px solid #ccc;
-            position: fixed;
+            position: sticky;
             width: 100%;
             height: 70px;
           }
