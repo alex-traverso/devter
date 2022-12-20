@@ -18,11 +18,12 @@ const AppLayout = ({ children }) => {
 
           main {
             background-color: white;
-            padding: 1.5rem;
-            height: 100vh;
+            height: 100%;
             width: 100%;
             border-radius: 10px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            overflow-y: auto;
+            position: relative;
           }
 
           @media (min-width: 425px) {
@@ -48,11 +49,17 @@ const AppLayout = ({ children }) => {
           margin: 0;
           box-sizing: border-box;
           font-family: ${fonts.base};
+          overfloy: hidden;
         }
 
         a {
           color: inherit;
           text-decoration: none;
+        }
+
+        textarea,
+        input {
+          font-family: ${fonts.base};
         }
       `}</style>
     </>

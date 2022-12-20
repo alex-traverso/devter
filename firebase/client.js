@@ -1,5 +1,11 @@
 import { initializeApp } from "firebase/app";
 import {
+  getFirestore,
+  addDoc,
+  collection,
+  Timestamp,
+} from "firebase/firestore";
+import {
   getAuth,
   signInWithPopup,
   GithubAuthProvider,
@@ -19,13 +25,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
 const mapUserFromFirebaseAuthToUser = (user) => {
-  const { displayName, email, photoURL } = user;
+  const { displayName, email, photoURL, uid } = user;
 
   return {
     name: displayName,
     email: email,
     avatar: photoURL,
+    uid: uid,
   };
 };
 
@@ -42,5 +52,27 @@ export const loginWithGithub = () => {
     return mapUserFromFirebaseAuthToUser(response);
   });
 };
+
+export const addDevit = ({ avatar, content, userId, userName }) => {
+  addDoc(collection(db, "devits"), {
+    avatar,
+    content,
+    userId,
+    userName,
+    createdAt: Timestamp.fromDate(new Date()),
+    likesCount: 0,
+    sharedCount: 0,
+  });
+};
+
+/* return db.collection(db, "devits").add({
+    avatar,
+    content,
+    userId,
+    userName,
+    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+    likesCount: 0,
+    sharedCount: 0,
+  }); */
 
 export default app;
