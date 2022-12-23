@@ -83,10 +83,15 @@ export const fetchLatestDevits = async () => {
       const id = doc.id;
       const { createdAt } = data;
 
+      const date = new Date(createdAt.seconds * 1000);
+
+      // add date like twitter
+      const normalizedCreatedAt = new Intl.DateTimeFormat("es-ES").format(date);
+
       return {
         ...data,
         id,
-        createdAt: +createdAt.toDate(),
+        createdAt: normalizedCreatedAt,
       };
     });
   });
