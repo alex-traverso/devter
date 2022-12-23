@@ -4,6 +4,11 @@ import {
   addDoc,
   collection,
   Timestamp,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  orderBy,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -32,7 +37,7 @@ const mapUserFromFirebaseAuthToUser = (user) => {
   const { displayName, email, photoURL, uid } = user;
 
   return {
-    name: displayName,
+    username: displayName,
     email: email,
     avatar: photoURL,
     uid: uid,
@@ -53,26 +58,38 @@ export const loginWithGithub = () => {
   });
 };
 
-export const addDevit = ({ avatar, content, userId, userName }) => {
-  addDoc(collection(db, "devits"), {
-    avatar,
-    content,
-    userId,
-    userName,
-    createdAt: Timestamp.fromDate(new Date()),
-    likesCount: 0,
-    sharedCount: 0,
-  });
+export const addDevit = async ({ avatar, content, userId, userName }) => {
+  try {
+    await addDoc(collection(db, "devits"), {
+      avatar,
+      content,
+      userId,
+      userName,
+      createdAt: Timestamp.fromDate(new Date()),
+      likesCount: 0,
+      sharedCount: 0,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-/* return db.collection(db, "devits").add({
-    avatar,
-    content,
-    userId,
-    userName,
-    createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
-    likesCount: 0,
-    sharedCount: 0,
-  }); */
+export const fetchLatestDevits = async () => {
+  const querySnapshot = getDocs(collection(db, "devits"));
+
+  return await querySnapshot.then(({ docs }) => {
+    return docs.map((doc) => {
+      const data = doc.data();
+      const id = doc.id;
+      const { createdAt } = data;
+
+      return {
+        ...data,
+        id,
+        createdAt: +createdAt.toDate(),
+      };
+    });
+  });
+};
 
 export default app;
