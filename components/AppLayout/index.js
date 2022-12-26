@@ -23,6 +23,8 @@ const AppLayout = ({ children }) => {
             border-radius: 10px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
             position: relative;
           }
 

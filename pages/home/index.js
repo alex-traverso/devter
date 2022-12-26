@@ -3,6 +3,13 @@ import AppLayout from "../../components/AppLayout";
 import Devit from "../../components/Devit";
 import useUser from "../../hooks/useUser";
 import { fetchLatestDevits } from "../../firebase/client";
+import Link from "next/link";
+import Head from "next/head";
+
+//Iconos navbar
+import Create from "../../components/Icons/Create";
+import Home from "../../components/Icons/Home";
+import Search from "../../components/Icons/Search";
 
 const HomePage = () => {
   const [timeline, setTimeline] = useState([]);
@@ -15,6 +22,9 @@ const HomePage = () => {
   return (
     <>
       <AppLayout>
+        <Head>
+          <title>Inicio / Devter</title>
+        </Head>
         <header>
           <h2>Inicio</h2>
         </header>
@@ -32,7 +42,17 @@ const HomePage = () => {
             )
           )}
         </section>
-        <nav></nav>
+        <nav>
+          <Link href='../home'>
+            <Home stroke='#439ACF' height={40} width={40} />
+          </Link>
+          <Link href='../compose/tweet'>
+            <Search stroke='#439ACF' height={40} width={40} />
+          </Link>
+          <Link href='../compose/tweet'>
+            <Create stroke='#439ACF' height={40} width={40} />
+          </Link>
+        </nav>
       </AppLayout>
 
       <style jsx>
@@ -49,6 +69,10 @@ const HomePage = () => {
             width: 100%;
           }
 
+          section {
+            flex: 1;
+          }
+
           h2 {
             font-weight: 800;
             padding-left: 15px;
@@ -62,6 +86,9 @@ const HomePage = () => {
             width: 100%;
             height: 3.5rem;
             background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
           }
         `}
       </style>
