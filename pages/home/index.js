@@ -64,7 +64,7 @@ const HomePage = () => {
             border-bottom: 1px solid #eee;
             background-color: #ffffffee;
             backdrop-filter: blur(3px);
-            height: 49px;
+            height: 3.75rem;
             position: sticky;
             width: 100%;
           }
