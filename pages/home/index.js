@@ -48,10 +48,10 @@ const HomePage = () => {
           <Link href='../home'>
             <Home stroke='#439ACF' height={40} width={40} />
           </Link>
-          <Link href='../compose/tweet'>
+          <Link href='../compose/devit'>
             <Search stroke='#439ACF' height={40} width={40} />
           </Link>
-          <Link href='../compose/tweet'>
+          <Link href='../compose/devit'>
             <Create stroke='#439ACF' height={40} width={40} />
           </Link>
         </nav>
