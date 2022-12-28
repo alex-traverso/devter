@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import AppLayout from "../../../components/AppLayout";
-import Button from "../../../components/Button";
-import Avatar from "../../../components/Avatar";
+import Head from "next/head";
 import useUser from "../../../hooks/useUser";
 import { addDevit, uploadImage } from "../../../firebase/client";
-import Head from "next/head";
+import AppLayout from "../../../components/AppLayout";
 import { getDownloadURL } from "firebase/storage";
+import Button from "../../../components/Button";
+import Avatar from "../../../components/Avatar";
 //Router
 import Router from "next/router";
 
@@ -36,12 +36,10 @@ export default function ComposeTweet() {
 
   useEffect(() => {
     if (task) {
-      // Listen for state changes, errors, and completion of the upload.
       //Progreso
       task.on(
         "state_changed",
         (snapshot) => {
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
@@ -56,8 +54,6 @@ export default function ComposeTweet() {
         },
         //En caso de error
         (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
           switch (error.code) {
             case "storage/unauthorized":
               // User doesn't have permission to access the object
@@ -73,7 +69,6 @@ export default function ComposeTweet() {
         },
         //Proceso completado
         () => {
-          // Upload completed successfully, now we can get the download URL
           getDownloadURL(task.snapshot.ref).then((downloadURL) => {
             setImgURL(downloadURL);
             console.log("File available at", downloadURL);
@@ -94,9 +89,9 @@ export default function ComposeTweet() {
     addDevit({
       avatar: user.avatar,
       content: message,
+      img: imgURL,
       userId: user.uid,
       userName: user.username,
-      img: imgURL,
     });
     try {
       Router.push("/home");
@@ -132,30 +127,38 @@ export default function ComposeTweet() {
         <Head>
           <title>Crear un Devit / Devter</title>
         </Head>
-        <form onSubmit={handleSubmit}>
-          <textarea
-            onChange={handleChange}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            placeholder='¿Que está pasando?'
-          ></textarea>
-          {imgURL ? (
-            <section>
-              <button
-                onClick={() => {
-                  setImgURL(null);
-                }}
-              >
-                X
-              </button>
-              <img src={imgURL}></img>
+        <section className='form-container'>
+          {user ? (
+            <section className='avatar-container'>
+              <Avatar src={user.avatar} />
             </section>
           ) : null}
-          <div>
-            <Button disabled={isButtonDisabled}>Devittear</Button>
-          </div>
-        </form>
+
+          <form onSubmit={handleSubmit}>
+            <textarea
+              onChange={handleChange}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              placeholder='¿Que está pasando?'
+            ></textarea>
+            {imgURL ? (
+              <section className='remove-img'>
+                <button
+                  onClick={() => {
+                    setImgURL(null);
+                  }}
+                >
+                  X
+                </button>
+                <img src={imgURL}></img>
+              </section>
+            ) : null}
+            <div>
+              <Button disabled={isButtonDisabled}>Devittear</Button>
+            </div>
+          </form>
+        </section>
       </AppLayout>
 
       <style jsx>{`
@@ -167,6 +170,7 @@ export default function ComposeTweet() {
           margin: 10px;
           display: flex;
           flex-direction: column;
+          width: 100%;
         }
 
         button {
@@ -181,7 +185,17 @@ export default function ComposeTweet() {
           border-radius: 999px;
         }
 
-        section {
+        .form-container {
+          display: flex;
+          align-items: flex-start;
+          width: 100%;
+        }
+
+        .avatar-container {
+          margin: 16px 0 0 16px;
+        }
+
+        .remove-img {
           position: relative;
         }
 
