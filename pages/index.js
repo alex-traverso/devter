@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import Head from "next/head";
-import AppLayout from "../components/AppLayout";
 import Button from "../components/Button";
 import GitHub from "../components/Icons/Github";
 import Logo from "../components/Icons/Logo";
@@ -38,31 +37,29 @@ export default function Home() {
         <link rel='shortcut icon' href='../public/favicon.ico' />
       </Head>
 
-      <AppLayout>
-        <section>
-          <Logo alt='logo' height={90} />
-          <h1>Devter</h1>
-          <h2>
-            Talk about development <br></br>with developers
-          </h2>
-          <div>
-            {user === USER_STATES.NOT_LOGGED && (
-              <Button onClick={handleClick}>
-                <GitHub width={24} height={24} fill={"#fff"} />
-                Login with Github
-              </Button>
-            )}
+      <section>
+        <Logo alt='logo' height={90} />
+        <h1>Devter</h1>
+        <h2>
+          Talk about development <br></br>with developers
+        </h2>
+        <div>
+          {user === USER_STATES.NOT_LOGGED && (
+            <Button onClick={handleClick}>
+              <GitHub width={24} height={24} fill={"#fff"} />
+              Login with Github
+            </Button>
+          )}
 
-            {user && user.avatar && (
-              <div>
-                <Avatar alt={user.name} src={user.avatar} text={user.name} />
-              </div>
-            )}
+          {user && user.avatar && (
+            <div>
+              <Avatar alt={user.name} src={user.avatar} text={user.name} />
+            </div>
+          )}
 
-            {user === USER_STATES.NOT_KNOWN && <Loading />}
-          </div>
-        </section>
-      </AppLayout>
+          {user === USER_STATES.NOT_KNOWN && <Loading />}
+        </div>
+      </section>
 
       <style jsx>{`
         img {

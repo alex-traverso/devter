@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AppLayout from "../../components/AppLayout";
 import Devit from "../../components/Devit";
 import useUser from "../../hooks/useUser";
 import { fetchLatestDevits } from "../../firebase/client";
@@ -21,41 +20,39 @@ const HomePage = () => {
 
   return (
     <>
-      <AppLayout>
-        <Head>
-          <title>Inicio / Devter</title>
-        </Head>
-        <header>
-          <h2>Inicio</h2>
-        </header>
-        <section>
-          {timeline.map(
-            ({ userId, userName, avatar, content, createdAt, id, img }) => (
-              <Devit
-                key={id}
-                id={id}
-                img={img}
-                userName={userName}
-                avatar={avatar}
-                content={content}
-                userId={userId}
-                createdAt={createdAt}
-              />
-            )
-          )}
-        </section>
-        <nav>
-          <Link href='../home'>
-            <Home stroke='#439ACF' height={40} width={40} />
-          </Link>
-          <Link href='../compose/devit'>
-            <Search stroke='#439ACF' height={40} width={40} />
-          </Link>
-          <Link href='../compose/devit'>
-            <Create stroke='#439ACF' height={40} width={40} />
-          </Link>
-        </nav>
-      </AppLayout>
+      <Head>
+        <title>Inicio / Devter</title>
+      </Head>
+      <header>
+        <h2>Inicio</h2>
+      </header>
+      <section>
+        {timeline.map(
+          ({ userId, userName, avatar, content, createdAt, id, img }) => (
+            <Devit
+              key={id}
+              id={id}
+              img={img}
+              userName={userName}
+              avatar={avatar}
+              content={content}
+              userId={userId}
+              createdAt={createdAt}
+            />
+          )
+        )}
+      </section>
+      <nav>
+        <Link href='../home'>
+          <Home stroke='#439ACF' height={40} width={40} />
+        </Link>
+        <Link href='../compose/devit'>
+          <Search stroke='#439ACF' height={40} width={40} />
+        </Link>
+        <Link href='../compose/devit'>
+          <Create stroke='#439ACF' height={40} width={40} />
+        </Link>
+      </nav>
 
       <style jsx>
         {`
