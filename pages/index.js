@@ -65,6 +65,11 @@ export default function Home() {
         img {
           height: 60px;
         }
+
+        div {
+          height: 100%;
+        }
+
         section {
           display: grid;
           height: 100%;
