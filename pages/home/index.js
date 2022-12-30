@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Devit from "../../components/Devit";
 import useUser from "../../hooks/useUser";
-import { fetchLatestDevits } from "../../firebase/client";
+import { fetchLatestDevits, listenLatestDevits } from "../../firebase/client";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -15,7 +15,10 @@ const HomePage = () => {
   const user = useUser();
 
   useEffect(() => {
-    user && fetchLatestDevits().then(setTimeline);
+    if (user) {
+      listenLatestDevits(setTimeline);
+    }
+    /* user && fetchLatestDevits().then(setTimeline); */
   }, [user]);
 
   return (

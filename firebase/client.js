@@ -6,9 +6,11 @@ import {
   Timestamp,
   doc,
   getDoc,
+  onSnapshot,
   getDocs,
   query,
   orderBy,
+  limit,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -79,24 +81,41 @@ export const addDevit = async ({ avatar, content, userId, userName, img }) => {
   }
 };
 
-export const fetchLatestDevits = async () => {
+const mapDevitFromFirebaseToDevitObjet = (doc) => {
+  const data = doc.data();
+  const id = doc.id;
+  const { createdAt } = data;
+
+  return {
+    ...data,
+    id,
+    createdAt: +createdAt.toDate(),
+  };
+};
+
+export const listenLatestDevits = (callback) => {
+  const q = query(
+    collection(db, "devits"),
+    orderBy("createdAt", "desc")
+    /* limit(20) */
+  );
+  const listen = onSnapshot(q, ({ docs }) => {
+    const newDevits = docs.map(mapDevitFromFirebaseToDevitObjet);
+    console.log(newDevits);
+    callback(newDevits);
+  });
+};
+
+/* export const fetchLatestDevits = async () => {
   const q = query(collection(db, "devits"), orderBy("createdAt", "desc"));
   const querySnapshot = getDocs(q);
 
   return await querySnapshot.then(({ docs }) => {
     return docs.map((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      const { createdAt } = data;
-
-      return {
-        ...data,
-        id,
-        createdAt: +createdAt.toDate(),
-      };
+      return mapDevitFromFirebaseToDevitObjet(doc);
     });
   });
-};
+}; */
 
 export const uploadImage = (file) => {
   const storageRef = ref(storage, `/posts ${file.name}`);
