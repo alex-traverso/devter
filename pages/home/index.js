@@ -20,7 +20,6 @@ const HomePage = () => {
       });
     }
     return () => unsubscribe && unsubscribe();
-    /* user && fetchLatestDevits().then(setTimeline); */
   }, [user]);
 
   return (
@@ -47,7 +46,6 @@ const HomePage = () => {
           )
         )}
       </section>
-
       <Navbar />
 
       <style jsx>

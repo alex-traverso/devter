@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./firebase-keys.json");
+const serviceAccount = require("./fb-key/firebase-key.json");
 
 try {
   admin.initializeApp({
