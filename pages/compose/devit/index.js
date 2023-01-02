@@ -7,6 +7,7 @@ import Button from "../../../components/Button";
 import Avatar from "../../../components/Avatar";
 //Router
 import Router from "next/router";
+import Navbar from "../../../components/Navbar";
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -157,6 +158,7 @@ export default function ComposeTweet() {
           </div>
         </form>
       </section>
+      <Navbar />
 
       <style jsx>{`
         div {

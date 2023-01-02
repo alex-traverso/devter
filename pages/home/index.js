@@ -2,22 +2,24 @@ import { useState, useEffect } from "react";
 import Devit from "../../components/Devit";
 import useUser from "../../hooks/useUser";
 import { fetchLatestDevits, listenLatestDevits } from "../../firebase/client";
-import Link from "next/link";
+
 import Head from "next/head";
 
 //Iconos navbar
-import Create from "../../components/Icons/Create";
-import Home from "../../components/Icons/Home";
-import Search from "../../components/Icons/Search";
+import Navbar from "../../components/Navbar";
 
 const HomePage = () => {
   const [timeline, setTimeline] = useState([]);
   const user = useUser();
 
   useEffect(() => {
+    let unsubscribe;
     if (user) {
-      listenLatestDevits(setTimeline);
+      unsubscribe = listenLatestDevits((newDevit) => {
+        setTimeline(newDevit);
+      });
     }
+    return () => unsubscribe && unsubscribe();
     /* user && fetchLatestDevits().then(setTimeline); */
   }, [user]);
 
@@ -45,17 +47,8 @@ const HomePage = () => {
           )
         )}
       </section>
-      <nav>
-        <Link href='../home'>
-          <Home stroke='#439ACF' height={40} width={40} />
-        </Link>
-        <Link href='../compose/devit'>
-          <Search stroke='#439ACF' height={40} width={40} />
-        </Link>
-        <Link href='../compose/devit'>
-          <Create stroke='#439ACF' height={40} width={40} />
-        </Link>
-      </nav>
+
+      <Navbar />
 
       <style jsx>
         {`
@@ -78,19 +71,6 @@ const HomePage = () => {
           h2 {
             font-weight: 800;
             padding-left: 15px;
-          }
-
-          nav {
-            bottom: 0;
-            left: 0;
-            border-top: 1px solid #ccc;
-            position: sticky;
-            width: 100%;
-            height: 3.5rem;
-            background-color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
           }
         `}
       </style>

@@ -25,6 +25,7 @@ const AppLayout = ({ children }) => {
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
             position: relative;
           }
 

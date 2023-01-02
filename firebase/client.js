@@ -94,14 +94,9 @@ const mapDevitFromFirebaseToDevitObjet = (doc) => {
 };
 
 export const listenLatestDevits = (callback) => {
-  const q = query(
-    collection(db, "devits"),
-    orderBy("createdAt", "desc")
-    /* limit(20) */
-  );
+  const q = query(collection(db, "devits"), orderBy("createdAt", "desc"));
   const listen = onSnapshot(q, ({ docs }) => {
     const newDevits = docs.map(mapDevitFromFirebaseToDevitObjet);
-    console.log(newDevits);
     callback(newDevits);
   });
 };
