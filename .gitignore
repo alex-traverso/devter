@@ -37,3 +37,4 @@ next-env.d.ts
 
 # firebase keys
 firebase/firebase-keys.json
+\firebase\firebase-keys.json
