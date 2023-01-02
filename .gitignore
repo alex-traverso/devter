@@ -36,5 +36,5 @@ yarn-error.log*
 next-env.d.ts
 
 # firebase keys
-firebase/firebase-key.json
 /firebase/firebase-key.json
+
