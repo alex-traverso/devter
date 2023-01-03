@@ -1,7 +1,7 @@
 import { DEFAULT_LANGUAGE } from "../constants/locale";
 
 const isDateTimeFormatSupported =
-  typeof Intl != "undefined" && Intl.DateTimeFormat;
+  typeof Intl !== "undefined" ? Intl.DateTimeFormat : null;
 
 export const formatDate = (timestamp, { language = DEFAULT_LANGUAGE } = {}) => {
   const date = new Date(timestamp);

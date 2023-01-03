@@ -4,8 +4,7 @@ import useUser from "../../hooks/useUser";
 import { fetchLatestDevits, listenLatestDevits } from "../../firebase/client";
 
 import Head from "next/head";
-
-//Iconos navbar
+//Navbar
 import Navbar from "../../components/Navbar";
 
 const HomePage = () => {
