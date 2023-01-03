@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { formatDate } from "./useDateTimeFormat";
 
-const isRelativeTimeFormatSupported =
-  typeof Intl !== "undefined" && Intl.RelativeTimeFormat;
+let isRelativeTimeFormatSupported =
+  typeof Intl !== "undefined" ? Intl.RelativeTimeFormat : null;
 
 //segundos que hay en dia, hora, etc...
 const DATE_UNITS = [
@@ -30,17 +30,18 @@ export const useTimeAgo = (timestamp) => {
 
   useEffect(() => {
     if (isRelativeTimeFormatSupported) {
-      const timeout = setInterval(() => {
+      const interval = setInterval(() => {
         const newTimeAgo = getDateDiffs(timestamp);
         setTimeAgo(newTimeAgo);
       }, 5000);
-      return () => clearInterval(timeout);
+      return () => clearInterval(interval);
     }
   }, [timestamp]);
 
   if (!isRelativeTimeFormatSupported) {
     return formatDate(timestamp);
   }
+
   const rtf = new Intl.RelativeTimeFormat("es", { style: "short" });
   const { value, unit } = timeAgo;
 
