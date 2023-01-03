@@ -101,17 +101,6 @@ export const listenLatestDevits = (callback) => {
   });
 };
 
-/* export const fetchLatestDevits = async () => {
-  const q = query(collection(db, "devits"), orderBy("createdAt", "desc"));
-  const querySnapshot = getDocs(q);
-
-  return await querySnapshot.then(({ docs }) => {
-    return docs.map((doc) => {
-      return mapDevitFromFirebaseToDevitObjet(doc);
-    });
-  });
-}; */
-
 export const uploadImage = (file) => {
   const storageRef = ref(storage, `/posts ${file.name}`);
   // 'file' comes from the Blob or File API

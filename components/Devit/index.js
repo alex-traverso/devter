@@ -3,6 +3,8 @@ import { useTimeAgo } from "../../hooks/useTimeAgo";
 import useDateTimeFormat from "../../hooks/useDateTimeFormat";
 import Link from "next/link";
 import Router from "next/router";
+import Like from "../Icons/Like";
+import Reply from "../Icons/Reply";
 
 export default function Devit({
   id,
@@ -11,6 +13,7 @@ export default function Devit({
   content,
   createdAt,
   img,
+  likesCount,
 }) {
   const timeAgo = useTimeAgo(createdAt);
   const createdAtFormated = useDateTimeFormat(createdAt);
@@ -23,7 +26,7 @@ export default function Devit({
   return (
     <>
       <article onClick={handleArticleClick}>
-        <div>
+        <div className='avatar-container'>
           <Avatar src={avatar} alt={userName} />
         </div>
         <section>
@@ -34,6 +37,13 @@ export default function Devit({
           </Link>
           <p>{content}</p>
           {img ? <img src={img} alt={userName} /> : null}
+          <div className='icon-container'>
+            <div>
+              <Reply width={25} height={25} />
+              <Like width={25} height={25} fill='#AAB8C2' />
+              <Like width={25} height={25} fill='#AAB8C2' value={likesCount} />
+            </div>
+          </div>
         </section>
       </article>
 
@@ -49,7 +59,11 @@ export default function Devit({
           cursor: pointer;
         }
 
-        div {
+        section {
+          width: 100%;
+        }
+
+        .avatar-container {
           padding-right: 10px;
         }
 
@@ -72,6 +86,18 @@ export default function Devit({
           border-radius: 10px;
           margin-top: 10px;
           height: auto;
+          width: 100%;
+        }
+
+        .icon-container {
+          display: flex;
+          justify-content: right;
+          margin-top: 1rem;
+        }
+
+        .icon-container > div {
+          display: flex;
+          justify-content: space-around;
           width: 100%;
         }
       `}</style>
