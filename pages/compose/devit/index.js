@@ -92,6 +92,7 @@ export default function ComposeTweet() {
       img: imgURL,
       userId: user.uid,
       userName: user.username,
+      liked: user.liked,
     });
     try {
       Router.push("/home");
