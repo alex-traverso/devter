@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Devit from "../../components/Devit";
 import useUser from "../../hooks/useUser";
-import { fetchLatestDevits, listenLatestDevits } from "../../firebase/client";
+import { listenLatestDevits } from "../../firebase/client";
 
 import Head from "next/head";
 //Navbar
@@ -39,7 +39,7 @@ const HomePage = () => {
             createdAt,
             id,
             img,
-            likesCount,
+            liked,
           }) => (
             <Devit
               key={id}
@@ -50,7 +50,7 @@ const HomePage = () => {
               content={content}
               userId={userId}
               createdAt={createdAt}
-              likesCount={likesCount}
+              liked={liked}
             />
           )
         )}

@@ -3,8 +3,22 @@ import { useTimeAgo } from "../../hooks/useTimeAgo";
 import useDateTimeFormat from "../../hooks/useDateTimeFormat";
 import Link from "next/link";
 import Router from "next/router";
+import { addLike, likePost } from "../../firebase/client";
+import { useState, useEffect } from "react";
+
+//Iconos
 import Like from "../Icons/Like";
 import Reply from "../Icons/Reply";
+import {
+  doc,
+  deleteDoc,
+  setDoc,
+  updateDoc,
+  collection,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../firebase/client";
+import useUser from "../../hooks/useUser";
 
 export default function Devit({
   id,
@@ -13,16 +27,39 @@ export default function Devit({
   content,
   createdAt,
   img,
-  likesCount,
+  liked,
 }) {
   const timeAgo = useTimeAgo(createdAt);
   const createdAtFormated = useDateTimeFormat(createdAt);
+  const user = useUser();
+  const [likes, setLikes] = useState([]);
+  const [hasLiked, setHasLiked] = useState(false);
 
   const handleArticleClick = (e) => {
     e.preventDefault();
     Router.push(`/status/${id}`);
   };
 
+  useEffect(() => {
+    onSnapshot(collection(db, "devits", id, "likes"), (snapshot) => {
+      setLikes(snapshot.docs);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    setHasLiked(likes.findIndex((like) => like.id === user.uid) !== -1);
+  }, [likes]);
+
+  const likePost = async () => {
+    const devitLiked = doc(db, "devits", id, "likes", user.uid);
+    if (liked) {
+      await deleteDoc(devitLiked);
+    } else {
+      await setDoc(doc(db, "devits", id, "likes", user.uid), {
+        username: user.username,
+      });
+    }
+  };
   return (
     <>
       <article onClick={handleArticleClick}>
@@ -41,7 +78,25 @@ export default function Devit({
             <div>
               <Reply width={25} height={25} />
               <Like width={25} height={25} fill='#AAB8C2' />
-              <Like width={25} height={25} fill='#AAB8C2' value={likesCount} />
+
+              {likes.length > 0 ? (
+                <>
+                  <Like
+                    width={25}
+                    height={25}
+                    fill='#E72A4B'
+                    onClick={likePost}
+                  />
+                  <span className='like-text'>{likes.length}</span>
+                </>
+              ) : (
+                <Like
+                  width={25}
+                  height={25}
+                  fill='#AAB8C2'
+                  onClick={likePost}
+                />
+              )}
             </div>
           </div>
         </section>
@@ -80,6 +135,10 @@ export default function Devit({
         p {
           line-height: 1.3125;
           margin: 0;
+        }
+
+        .like-text {
+          color: #e72a4b;
         }
 
         img {

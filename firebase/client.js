@@ -10,7 +10,9 @@ import {
   getDocs,
   query,
   orderBy,
-  limit,
+  updateDoc,
+  increment,
+  setDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -34,7 +36,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 //Inicia firebase storage
 const storage = getStorage(app);
@@ -73,7 +75,7 @@ export const addDevit = async ({ avatar, content, userId, userName, img }) => {
       userId,
       userName,
       createdAt: Timestamp.fromDate(new Date()),
-      likesCount: 0,
+      liked: false,
       sharedCount: 0,
     });
   } catch (err) {
@@ -107,5 +109,18 @@ export const uploadImage = (file) => {
   const uploadTask = uploadBytesResumable(storageRef, file);
   return uploadTask;
 };
+
+/* export const addLike = async () => {
+  const q = query(collection(db, "devits"), orderBy("createdAt", "desc"));
+  const listen = onSnapshot(q, ({ docs }) => {
+    const newDevits = docs.map((devit) => {
+      const id = devit.id;
+      const devitLiked = doc(db, "devits", id);
+      updateDoc(devitLiked, {
+        liked: true,
+      });
+    });
+  });
+}; */
 
 export default app;
