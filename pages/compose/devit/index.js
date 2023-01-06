@@ -8,6 +8,7 @@ import Avatar from "../../../components/Avatar";
 //Router
 import Router from "next/router";
 import Navbar from "../../../components/Navbar";
+import UploadImageIcon from "../../../components/Icons/UploadImageIcon";
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -92,7 +93,6 @@ export default function ComposeTweet() {
       img: imgURL,
       userId: user.uid,
       userName: user.username,
-      liked: user.liked,
     });
     try {
       Router.push("/home");
@@ -114,6 +114,12 @@ export default function ComposeTweet() {
     e.preventDefault();
     setDrag(DRAG_IMAGE_STATES.NONE);
     const file = e.dataTransfer.files[0];
+    const task = uploadImage(file);
+    setTask(task);
+  };
+
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
     const task = uploadImage(file);
     setTask(task);
   };
@@ -141,6 +147,18 @@ export default function ComposeTweet() {
             onDrop={handleDrop}
             placeholder='¿Que está pasando?'
           ></textarea>
+          <div className='upload-img-container'>
+            <label
+              for='file'
+              onChange={(file) => {
+                handleUpload(file);
+              }}
+            >
+              <UploadImageIcon width='40' height='40' />
+              <input id='file' type='file' />
+            </label>
+          </div>
+
           {imgURL ? (
             <section className='remove-img'>
               <button
@@ -182,6 +200,24 @@ export default function ComposeTweet() {
           width: 1.875rem;
           height: 1.875rem;
           border-radius: 999px;
+        }
+
+        .upload-img-container {
+          display: flex;
+        }
+
+        input[type="file"]#file {
+          width: 0.1px;
+          height: 0.1px;
+          opacity: 0;
+          overflow: hidden;
+          position: absolute;
+          z-index: -1;
+        }
+
+        label[for="file"] {
+          height: 35px;
+          width: 35px;
         }
 
         .form-container {

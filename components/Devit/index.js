@@ -30,7 +30,6 @@ export default function Devit({
   content,
   createdAt,
   img,
-  liked,
 }) {
   const timeAgo = useTimeAgo(createdAt);
   const createdAtFormated = useDateTimeFormat(createdAt);
