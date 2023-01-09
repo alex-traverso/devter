@@ -109,17 +109,4 @@ export const uploadImage = (file) => {
   return uploadTask;
 };
 
-/* export const addLike = async () => {
-  const q = query(collection(db, "devits"), orderBy("createdAt", "desc"));
-  const listen = onSnapshot(q, ({ docs }) => {
-    const newDevits = docs.map((devit) => {
-      const id = devit.id;
-      const devitLiked = doc(db, "devits", id);
-      updateDoc(devitLiked, {
-        liked: true,
-      });
-    });
-  });
-}; */
-
 export default app;
