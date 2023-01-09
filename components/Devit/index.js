@@ -42,7 +42,8 @@ export default function Devit({
     Router.push(`/status/${id}`);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.stopPropagation();
     listenLatestDevits((newDevits) => {
       newDevits.findIndex((newDevits) => newDevits.id === user.uid);
       deleteDoc(doc(db, "devits", id));
@@ -60,7 +61,8 @@ export default function Devit({
     setHasLiked(likes.findIndex((like) => like.id === user.uid) !== -1);
   }, [likes]);
 
-  const likePost = async () => {
+  const likePost = async (e) => {
+    e.stopPropagation();
     const devitLiked = doc(db, "devits", id, "likes", user.uid);
     if (hasLiked) {
       await deleteDoc(devitLiked);
