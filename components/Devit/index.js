@@ -3,8 +3,12 @@ import { useTimeAgo } from "../../hooks/useTimeAgo";
 import useDateTimeFormat from "../../hooks/useDateTimeFormat";
 import Link from "next/link";
 import Router from "next/router";
-import { addLike, likePost } from "../../firebase/client";
 import { useState, useEffect } from "react";
+import Modal from "../Modal";
+
+//Recoil
+import { useRecoilState } from "recoil";
+import { modalState, postIdState } from "../../atoms/modalAtom";
 
 //Iconos
 import Like from "../Icons/Like";
@@ -37,6 +41,9 @@ export default function Devit({
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
 
+  /* const [showModal, setShowModal] = useState(null); */
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
+
   const handleArticleClick = (e) => {
     e.preventDefault();
     Router.push(`/status/${id}`);
@@ -49,6 +56,12 @@ export default function Devit({
       deleteDoc(doc(db, "devits", id));
       Router.push("/");
     });
+  };
+
+  const handleReply = (e) => {
+    e.stopPropagation();
+    setShowModal(true);
+    console.log(e);
   };
 
   useEffect(() => {
@@ -88,7 +101,7 @@ export default function Devit({
           {img ? <img src={img} alt={userName} /> : null}
           <div className='icon-container'>
             <div>
-              <Reply width={25} height={25} />
+              <Reply width={25} height={25} onClick={handleReply} />
               <Delete
                 width={25}
                 height={25}
@@ -119,6 +132,7 @@ export default function Devit({
           </div>
         </section>
       </article>
+      {/* {showModal ? <Modal /> : null} */}
 
       <style jsx>{`
         article {

@@ -125,7 +125,7 @@ export default function ComposeTweet() {
   };
 
   const isButtonDisabled =
-    message.length === 0 || status === COMPOSE_STATES.LOADING;
+    (message.length === 0 && !imgURL) || status === COMPOSE_STATES.LOADING;
 
   return (
     <>
@@ -154,7 +154,7 @@ export default function ComposeTweet() {
                 handleUpload(file);
               }}
             >
-              <UploadImageIcon width='40' height='40' />
+              <UploadImageIcon width='38' height='38' />
               <input id='file' type='file' />
             </label>
           </div>
@@ -242,7 +242,7 @@ export default function ComposeTweet() {
 
         textarea {
           align-self: center;
-          min-height: 150px;
+          min-height: 120px;
           width: calc(100% - 30px);
           border: ${drag === DRAG_IMAGE_STATES.DRAG_OVER
             ? "3px dashed #09f"
