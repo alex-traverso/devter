@@ -3,6 +3,11 @@ import Devit from "../../components/Devit";
 import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
 
+//Recoil
+import { useRecoilState } from "recoil";
+import { modalState } from "../../atoms/modalAtom";
+//Modal
+import { Modal } from "../../components/Modal";
 import Head from "next/head";
 //Navbar
 import Navbar from "../../components/Navbar";
@@ -10,6 +15,9 @@ import Navbar from "../../components/Navbar";
 const HomePage = () => {
   const [timeline, setTimeline] = useState([]);
   const user = useUser();
+
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
+  console.log("home es " + isOpen);
 
   useEffect(() => {
     let unsubscribe;
@@ -44,6 +52,7 @@ const HomePage = () => {
             />
           )
         )}
+        {isOpen && <Modal />}
       </section>
       <Navbar />
 

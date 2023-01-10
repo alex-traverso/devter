@@ -4,12 +4,10 @@ import useDateTimeFormat from "../../hooks/useDateTimeFormat";
 import Link from "next/link";
 import Router from "next/router";
 import { useState, useEffect } from "react";
-import Modal from "../Modal";
 
 //Recoil
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
-
 //Iconos
 import Like from "../Icons/Like";
 import Reply from "../Icons/Reply";
@@ -41,8 +39,9 @@ export default function Devit({
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
 
-  /* const [showModal, setShowModal] = useState(null); */
   const [isOpen, setIsOpen] = useRecoilState(modalState);
+  const [postId, setPostId] = useRecoilState(postIdState);
+  const [comments, setComments] = useState([]);
 
   const handleArticleClick = (e) => {
     e.preventDefault();
@@ -60,8 +59,11 @@ export default function Devit({
 
   const handleReply = (e) => {
     e.stopPropagation();
-    setShowModal(true);
+    setPostId(id);
+    console.log("handleReply isOpen " + isOpen);
+    setIsOpen(true);
     console.log(e);
+    console.log("handleReply isOpen " + isOpen);
   };
 
   useEffect(() => {
@@ -101,7 +103,18 @@ export default function Devit({
           {img ? <img src={img} alt={userName} /> : null}
           <div className='icon-container'>
             <div>
-              <Reply width={25} height={25} onClick={handleReply} />
+              <div className='comments-count-container'>
+                <Reply width={25} height={25} onClick={handleReply} />
+                {/* {comments.length > 0 ? (
+                  <>
+                    <Reply width={25} height={25} onClick={handleReply} />
+                    <span>{comments.length}</span>
+                  </>
+                ) : (
+                  <Reply width={25} height={25} onClick={handleReply} />
+                )} */}
+              </div>
+
               <Delete
                 width={25}
                 height={25}
@@ -168,6 +181,7 @@ export default function Devit({
           line-height: 1.3125;
           margin: 0;
         }
+        .comments-count-container,
         .like-count-container {
           display: flex;
           align-items: center;
