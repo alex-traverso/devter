@@ -11,14 +11,16 @@ export default function DevitPage(props) {
 }
 
 //Data fetching usando getInitialProps
-DevitPage.getInitialProps = (context) => {
+DevitPage.getInitialProps = async (context) => {
   const { query, res } = context;
   const { id } = query;
 
-  return fetch(`http://localhost:3000/api/devits/${id}`).then((apiResponse) => {
-    if (apiResponse.ok) return apiResponse.json();
-    if (res) {
-      res.writeHead(404).end();
+  return await fetch(`http://localhost:3000/api/devits/${id}`).then(
+    (apiResponse) => {
+      if (apiResponse.ok) return apiResponse.json();
+      if (res) {
+        res.writeHead(404).end();
+      }
     }
-  });
+  );
 };
