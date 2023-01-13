@@ -17,7 +17,6 @@ const HomePage = () => {
   const user = useUser();
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);
-  console.log("home es " + isOpen);
 
   useEffect(() => {
     let unsubscribe;

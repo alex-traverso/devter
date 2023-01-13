@@ -60,10 +60,7 @@ export default function Devit({
   const handleReply = (e) => {
     e.stopPropagation();
     setPostId(id);
-    console.log("handleReply isOpen " + isOpen);
     setIsOpen(true);
-    console.log(e);
-    console.log("handleReply isOpen " + isOpen);
   };
 
   useEffect(() => {
@@ -105,6 +102,7 @@ export default function Devit({
             <div>
               <div className='comments-count-container'>
                 <Reply width={25} height={25} onClick={handleReply} />
+                {comments.length > 0 ? <span>{comments.length}</span> : null}
                 {/* {comments.length > 0 ? (
                   <>
                     <Reply width={25} height={25} onClick={handleReply} />
@@ -145,7 +143,6 @@ export default function Devit({
           </div>
         </section>
       </article>
-      {/* {showModal ? <Modal /> : null} */}
 
       <style jsx>{`
         article {

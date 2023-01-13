@@ -18,7 +18,6 @@ import Router from "next/router";
 
 export default function Home() {
   const user = useUser();
-
   useEffect(() => {
     user && Router.replace("/home");
   }, [user]);
