@@ -3,6 +3,9 @@ import Avatar from "../Avatar";
 import { colors } from "../../styles/theme";
 import useUser, { USER_STATES } from "../../hooks/useUser";
 
+import { useTimeAgo } from "../../hooks/useTimeAgo";
+import useDateTimeFormat from "../../hooks/useDateTimeFormat";
+
 import {
   onSnapshot,
   doc,
@@ -14,6 +17,7 @@ import { db } from "../../firebase/client";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
 import Router from "next/router";
+import Link from "next/link";
 
 export const Modal = () => {
   const user = useUser();
@@ -22,6 +26,8 @@ export const Modal = () => {
   const [postId, setPostId] = useRecoilState(postIdState);
   const [post, setPost] = useState();
   const [comment, setComment] = useState();
+
+  /* const timeAgo = useTimeAgo(post?.createdAt); */
 
   useEffect(
     () =>
@@ -51,7 +57,20 @@ export const Modal = () => {
       <section>
         <div className='user-reply-container'>
           <Avatar src={post?.avatar} />
-          <h4>{post?.userName}</h4>
+          <div>
+            <div className='user-reply-avatar'>
+              <strong>{post?.userName}</strong>
+              <span> . </span>
+            </div>
+            <div className='user-reply-info'>
+              <div>{post?.content ? <p>{post?.content}</p> : null}</div>
+              {post?.img ? (
+                <Link legacyBehavior href={post?.img}>
+                  <a>Imagen / Video</a>
+                </Link>
+              ) : null}
+            </div>
+          </div>
         </div>
         <div className='reply-container'>
           {user && user.avatar && (
@@ -95,13 +114,32 @@ export const Modal = () => {
           right: 1rem;
           border-radius: 10px;
           width: 90%;
-          height: 40vh;
+          min-height: 45vh;
         }
 
         .user-reply-container {
           margin: 1rem;
           display: flex;
+          align-items: flex-start;
           gap: 1rem;
+        }
+
+        .user-reply-avatar {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          height: auto;
+          gap: 8px;
+        }
+
+        .user-reply-info {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .user-reply-info > a {
+          color: ${colors.primary};
         }
 
         .reply-container {
@@ -154,6 +192,11 @@ export const Modal = () => {
           padding: 15px;
           resize: none;
           font-size: 18px;
+        }
+
+        .img-link {
+          font-size: 0.8rem;
+          width: 100%;
         }
       `}</style>
     </>
