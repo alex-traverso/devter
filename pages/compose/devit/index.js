@@ -14,7 +14,9 @@ const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
   LOADING: 1,
   SUCCESS: 2,
+  NONE: 3,
   ERROR: -1,
+  ERROR_LENGTH: -2,
 };
 
 const DRAG_IMAGE_STATES = {
@@ -81,6 +83,11 @@ export default function ComposeTweet() {
 
   const handleChange = (e) => {
     const { value } = e.target;
+    if (value.length >= 120) {
+      setStatus(COMPOSE_STATES.ERROR_LENGTH);
+    } else {
+      setStatus(COMPOSE_STATES.NONE);
+    }
     setMessage(value);
   };
 
@@ -125,7 +132,9 @@ export default function ComposeTweet() {
   };
 
   const isButtonDisabled =
-    (message.length === 0 && !imgURL) || status === COMPOSE_STATES.LOADING;
+    (message.length === 0 && !imgURL) ||
+    status === COMPOSE_STATES.LOADING ||
+    status === COMPOSE_STATES.ERROR_LENGTH;
 
   return (
     <>
@@ -147,6 +156,9 @@ export default function ComposeTweet() {
             onDrop={handleDrop}
             placeholder='¿Que está pasando?'
           ></textarea>
+          {status === COMPOSE_STATES.ERROR_LENGTH ? (
+            <p className='error-length'>El máximo de caracteres es de 140</p>
+          ) : null}
           <div className='upload-img-container'>
             <label
               for='file'
@@ -252,6 +264,11 @@ export default function ComposeTweet() {
           padding: 15px;
           resize: none;
           font-size: 21px;
+        }
+
+        .error-length {
+          font-size: 0.9rem;
+          color: #f4212e;
         }
       `}</style>
     </>
