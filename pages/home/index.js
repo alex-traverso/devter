@@ -17,7 +17,6 @@ const HomePage = () => {
   const user = useUser();
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);
-
   useEffect(() => {
     let unsubscribe;
     if (user) {
@@ -51,7 +50,7 @@ const HomePage = () => {
             />
           )
         )}
-        {isOpen && <Modal />}
+        {isOpen && <Modal timeline={timeline} />}
       </section>
       <Navbar />
 

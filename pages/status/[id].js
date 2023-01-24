@@ -2,6 +2,7 @@ import Devit from "../../components/Devit";
 import Navbar from "../../components/Navbar";
 
 export default function DevitPage(props) {
+  console.log(props);
   return (
     <>
       <Devit {...props} />

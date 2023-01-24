@@ -51,12 +51,13 @@ export default function Home() {
           )}
 
           {user && user.avatar && (
-            <div>
+            <div className='avatar-loading-container'>
               <Avatar alt={user.name} src={user.avatar} text={user.name} />
+              <Loading width={50} height={50} />
             </div>
           )}
 
-          {user === USER_STATES.NOT_KNOWN && <Loading />}
+          {user === USER_STATES.NOT_KNOWN && <Loading width={30} height={30} />}
         </div>
       </section>
 
@@ -92,8 +93,10 @@ export default function Home() {
           margin-top: 0.3rem;
         }
 
-        .loading {
-          height: 30px;
+        .avatar-loading-container {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
         }
       `}</style>
     </div>

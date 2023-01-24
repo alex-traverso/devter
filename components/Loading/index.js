@@ -3,10 +3,17 @@ import { colors } from "../../styles/theme";
 export default function Loading({ size }) {
   return (
     <>
-      <div></div>
+      <div className='loading-container'>
+        <div className='loading'></div>
+      </div>
       <style jsx>
         {`
-          div {
+          .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .loading {
             border: 4px solid #f3f3f3;
             border-radius: 50%;
             border-top: 4px solid ${colors.secondary};
