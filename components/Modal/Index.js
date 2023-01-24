@@ -1,41 +1,51 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Avatar from "../Avatar";
 import { colors } from "../../styles/theme";
-import useUser, { USER_STATES } from "../../hooks/useUser";
+import useUser from "../../hooks/useUser";
 
 import { useTimeAgo } from "../../hooks/useTimeAgo";
 import useDateTimeFormat from "../../hooks/useDateTimeFormat";
+import Loading from "../Loading";
 
-import {
-  onSnapshot,
-  doc,
-  addDoc,
-  collection,
-  serverTimestamp,
-} from "@firebase/firestore";
+import { onSnapshot, doc, addDoc, collection } from "@firebase/firestore";
 import { db } from "../../firebase/client";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
 import Router from "next/router";
 import Link from "next/link";
 
-export const Modal = () => {
+export const Modal = ({ timeline }) => {
   const user = useUser();
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
-  const [post, setPost] = useState();
+  const [post, setPost] = useState([]);
   const [comment, setComment] = useState();
 
-  /* const timeAgo = useTimeAgo(post?.createdAt); */
+  const [clickedPost, setClickedPost] = useState();
 
-  useEffect(
-    () =>
-      onSnapshot(doc(db, "devits", postId), (snapshot) => {
-        setPost(snapshot.data());
-      }),
-    [db]
+  useEffect(() => {
+    const postMap = post.map((clickedPost) => {
+      if (clickedPost.id === postId) {
+        setClickedPost(clickedPost);
+      }
+    });
+  }, [post]);
+
+  const timeAgo = useTimeAgo(clickedPost ? clickedPost.createdAt : 0);
+
+  const createdAtFormated = useDateTimeFormat(
+    clickedPost ? clickedPost.createdAt : 0
   );
+
+  useEffect(() => {
+    setPost(timeline);
+
+    //Problema, cambiar snapshot, importar un componente que tenga la data de cada devit
+    /* onSnapshot(doc(db, "devits", postId), (snapshot) => {
+      setPost(snapshot.data());
+    }); */
+  }, [db]);
 
   const sendComment = async (e) => {
     e.preventDefault();
@@ -52,26 +62,30 @@ export const Modal = () => {
     Router.push(`/status/${postId}`);
   };
 
-  return (
+  return clickedPost ? (
     <>
       <section>
         <div className='user-reply-container'>
-          <Avatar src={post?.avatar} />
+          <Avatar src={clickedPost.avatar} />
           <div>
             <div className='user-reply-avatar'>
-              <strong>{post?.userName}</strong>
+              <strong>{clickedPost.userName}</strong>
               <span> . </span>
+              <time title={createdAtFormated}>{timeAgo}</time>
             </div>
             <div className='user-reply-info'>
-              <div>{post?.content ? <p>{post?.content}</p> : null}</div>
-              {post?.img ? (
-                <Link legacyBehavior href={post?.img}>
+              <div>
+                {clickedPost.content ? <p>{clickedPost.content}</p> : null}
+              </div>
+              {clickedPost.img ? (
+                <Link legacyBehavior href={clickedPost.img}>
                   <a>Imagen / Video</a>
                 </Link>
               ) : null}
             </div>
           </div>
         </div>
+
         <div className='reply-container'>
           {user && user.avatar && (
             <div>
@@ -130,6 +144,16 @@ export const Modal = () => {
           align-items: center;
           height: auto;
           gap: 8px;
+        }
+
+        time {
+          color: #555;
+          font-size: 14px;
+          text-decoration: none;
+        }
+
+        time:hover {
+          text-decoration: underline;
         }
 
         .user-reply-info {
@@ -200,5 +224,7 @@ export const Modal = () => {
         }
       `}</style>
     </>
+  ) : (
+    <Loading width={30} height={30} />
   );
 };
