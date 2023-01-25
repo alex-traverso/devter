@@ -45,6 +45,7 @@ export default function Devit({
 
   const handleArticleClick = (e) => {
     e.preventDefault();
+    setPostId(id);
     Router.push(`/status/${id}`);
   };
 

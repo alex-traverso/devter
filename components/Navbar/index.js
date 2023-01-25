@@ -21,10 +21,10 @@ export default function Navbar() {
 
       <style jsx>{`
         nav {
+          position: sticky;
           bottom: 0;
           left: 0;
           border-top: 1px solid #ccc;
-          position: sticky;
           width: 100%;
           height: 3.5rem;
           background-color: #fff;

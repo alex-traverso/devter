@@ -235,6 +235,7 @@ export default function ComposeTweet() {
         .form-container {
           display: flex;
           align-items: flex-start;
+          flex: 1;
           width: 100%;
         }
 
