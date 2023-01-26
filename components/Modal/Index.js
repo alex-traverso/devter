@@ -99,26 +99,13 @@ export const Modal = ({ timeline }) => {
   return clickedPost ? (
     <>
       <section>
-        <div className='user-reply-container'>
-          <Avatar src={clickedPost.avatar} />
-          <div>
-            <div className='user-reply-avatar'>
-              <strong>{clickedPost.userName}</strong>
-              <span> . </span>
-              <time>{timeAgo}</time>
-            </div>
-            <div className='user-reply-info'>
-              <div>
-                {clickedPost.content ? <p>{clickedPost.content}</p> : null}
-              </div>
-              {clickedPost.img ? (
-                <Link legacyBehavior href={clickedPost.img}>
-                  <a>Imagen / Video</a>
-                </Link>
-              ) : null}
-            </div>
-          </div>
-        </div>
+        <Devit
+          avatar={clickedPost.avatar}
+          content={clickedPost.content}
+          id={clickedPost.id}
+          createdAt={clickedPost.createdAt}
+          userName={clickedPost.userName}
+        />
 
         <div className='reply-container'>
           {user && user.avatar && (
@@ -140,7 +127,6 @@ export const Modal = ({ timeline }) => {
             Enviar
           </button>
         </div>
-
         {isOpen ? (
           <button
             className='btn-close-modal'
@@ -264,11 +250,22 @@ export const Modal = ({ timeline }) => {
 };
 
 {
-  /* <Devit
-  avatar={clickedPost.avatar}
-  content={clickedPost.content}
-  id={clickedPost.id}
-  createdAt={clickedPost.createdAt}
-  userName={clickedPost.userName}
-/>; */
+  /* <div className='user-reply-container'>
+  <Avatar src={clickedPost.avatar} />
+  <div>
+    <div className='user-reply-avatar'>
+      <strong>{clickedPost.userName}</strong>
+      <span> . </span>
+      <time>{timeAgo}</time>
+    </div>
+    <div className='user-reply-info'>
+      <div>{clickedPost.content ? <p>{clickedPost.content}</p> : null}</div>
+      {clickedPost.img ? (
+        <Link legacyBehavior href={clickedPost.img}>
+          <a>Imagen / Video</a>
+        </Link>
+      ) : null}
+    </div>
+  </div>
+</div>; */
 }

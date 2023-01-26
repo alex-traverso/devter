@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Devit from "../../components/Devit";
+import DevitComplete from "../../components/DevitComplete";
 import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
 
@@ -38,7 +38,7 @@ const HomePage = () => {
       <section>
         {timeline.map(
           ({ userId, userName, avatar, content, createdAt, id, img }) => (
-            <Devit
+            <DevitComplete
               key={id}
               id={id}
               img={img}
