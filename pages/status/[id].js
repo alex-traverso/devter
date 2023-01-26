@@ -1,4 +1,4 @@
-import Devit from "../../components/Devit";
+import DevitComplete from "../../components/DevitComplete";
 import Navbar from "../../components/Navbar";
 import { useState, useEffect } from "react";
 import Avatar from "../../components/Avatar";
@@ -45,7 +45,7 @@ export default function DevitPage(props) {
 
   return (
     <>
-      <Devit {...props} />
+      <DevitComplete {...props} />
       <>
         {comments === undefined ? null : (
           <>
@@ -53,7 +53,7 @@ export default function DevitPage(props) {
             <div className='comments-container'>
               {comments.map(
                 ({ userId, userName, avatar, content, createdAt, id }) => (
-                  <Devit
+                  <DevitComplete
                     key={id}
                     id={id}
                     userName={userName}
