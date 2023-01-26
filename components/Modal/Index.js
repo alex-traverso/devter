@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Avatar from "../Avatar";
+import Devit from "../Devit";
 import { colors } from "../../styles/theme";
 import useUser from "../../hooks/useUser";
 
@@ -11,6 +12,8 @@ import {
   onSnapshot,
   doc,
   addDoc,
+  getDoc,
+  query,
   collection,
   Timestamp,
 } from "@firebase/firestore";
@@ -39,16 +42,40 @@ export const Modal = ({ timeline }) => {
   }, [post]);
 
   const timeAgo = useTimeAgo(clickedPost ? clickedPost.createdAt : 0);
-
   const createdAtFormated = useDateTimeFormat(
     clickedPost ? clickedPost.createdAt : 0
   );
 
+  console.log(post);
+  console.log(clickedPost);
+
   useEffect(() => {
     setPost(timeline);
+    //Obtener clickedPost
+    /* const querySnapshot = query(collection(db, "devits"));
+    onSnapshot(querySnapshot, ({ docs }) => {
+      const newClickedPost = docs.map((doc) => {
+        const data = doc.data();
+        const id = doc.id;
+        const { createdAt } = data;
 
+        return {
+          ...data,
+          id,
+          createdAt: +createdAt.toDate(),
+        };
+      });
+      setPost(newClickedPost);
+    }); */
+    /* onSnapshot(doc(db, "devits", postId), (snapshot) => {
+      console.log(snapshot);
+
+      setClickedPost(snapshot.data());
+    }); */
     //Problema, cambiar snapshot, importar un componente que tenga la data de cada devit
     /* onSnapshot(doc(db, "devits", postId), (snapshot) => {
+      console.log(snapshot);
+      
       setPost(snapshot.data());
     }); */
   }, [db]);
@@ -78,7 +105,7 @@ export const Modal = ({ timeline }) => {
             <div className='user-reply-avatar'>
               <strong>{clickedPost.userName}</strong>
               <span> . </span>
-              <time title={createdAtFormated}>{timeAgo}</time>
+              <time>{timeAgo}</time>
             </div>
             <div className='user-reply-info'>
               <div>
@@ -235,3 +262,13 @@ export const Modal = ({ timeline }) => {
     <Loading width={30} height={30} />
   );
 };
+
+{
+  /* <Devit
+  avatar={clickedPost.avatar}
+  content={clickedPost.content}
+  id={clickedPost.id}
+  createdAt={clickedPost.createdAt}
+  userName={clickedPost.userName}
+/>; */
+}
