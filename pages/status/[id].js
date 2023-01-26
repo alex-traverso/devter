@@ -18,7 +18,7 @@ export default function DevitPage(props) {
   /* const timeAgo = useTimeAgo(comments ? comments.createdAt : 0); */
 
   useEffect(() => {
-    //Obtener productos
+    //Obtener comentarios
     const obtainComments = () => {
       const querySnapshot = query(collection(db, "devits", postId, "comments"));
 
