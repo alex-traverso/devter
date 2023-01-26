@@ -26,10 +26,12 @@ export default function DevitPage(props) {
         const newComments = docs.map((doc) => {
           const data = doc.data();
           const id = doc.id;
+          const { createdAt } = data;
 
           return {
             ...data,
             id,
+            createdAt: +createdAt.toDate(),
           };
         });
         setComments(newComments);
@@ -49,18 +51,19 @@ export default function DevitPage(props) {
           <>
             <div>{comments.length === 0 && null}</div>
             <div className='comments-container'>
-              {comments.map((comment, i) => (
-                <article className='comments' key={`${comment.uid}-${i}`}>
-                  <div className='avatar-container'>
-                    <Avatar src={comment.avatar} alt={comment.userName} />
-                  </div>
-                  <section className='comment'>
-                    <strong>{comment.userName}</strong>
-                    <span> . </span>
-                    <p>{comment.comment}</p>
-                  </section>
-                </article>
-              ))}
+              {comments.map(
+                ({ userId, userName, avatar, content, createdAt, id }) => (
+                  <Devit
+                    key={id}
+                    id={id}
+                    userName={userName}
+                    avatar={avatar}
+                    content={content}
+                    userId={userId}
+                    createdAt={createdAt}
+                  />
+                )
+              )}
             </div>
           </>
         )}
@@ -111,3 +114,16 @@ DevitPage.getInitialProps = async (context) => {
     }
   );
 };
+
+{
+  /* <article className='comments' key={`${comment.uid}-${i}`}>
+                  <div className='avatar-container'>
+                    <Avatar src={comment.avatar} alt={comment.userName} />
+                  </div>
+                  <section className='comment'>
+                    <strong>{comment.userName}</strong>
+                    <span> . </span>
+                    <p>{comment.comment}</p>
+                  </section>
+                </article> */
+}

@@ -7,7 +7,13 @@ import { useTimeAgo } from "../../hooks/useTimeAgo";
 import useDateTimeFormat from "../../hooks/useDateTimeFormat";
 import Loading from "../Loading";
 
-import { onSnapshot, doc, addDoc, collection } from "@firebase/firestore";
+import {
+  onSnapshot,
+  doc,
+  addDoc,
+  collection,
+  Timestamp,
+} from "@firebase/firestore";
 import { db } from "../../firebase/client";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
@@ -51,11 +57,12 @@ export const Modal = ({ timeline }) => {
     e.preventDefault();
 
     await addDoc(collection(db, "devits", postId, "comments"), {
-      comment: comment,
+      content: comment,
       userName: user.username,
       email: user.email,
       avatar: user.avatar,
-      uid: user.uid,
+      userId: user.uid,
+      createdAt: Timestamp.fromDate(new Date()),
     });
     setIsOpen(false);
     setComment("");
