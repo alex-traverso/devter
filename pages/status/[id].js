@@ -15,8 +15,6 @@ export default function DevitPage(props) {
   const [postId, setPostId] = useRecoilState(postIdState);
   const [comments, setComments] = useState();
 
-  /* const timeAgo = useTimeAgo(comments ? comments.createdAt : 0); */
-
   useEffect(() => {
     //Obtener comentarios
     const obtainComments = () => {
