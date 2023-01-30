@@ -34,6 +34,28 @@ export const Modal = ({ timeline }) => {
   const [clickedPost, setClickedPost] = useState();
 
   useEffect(() => {
+    //Obtener comentarios
+    const obtainDevit = () => {
+      const querySnapshot = query(collection(db, "devits"));
+      onSnapshot(querySnapshot, ({ docs }) => {
+        const clickedPost = docs.map((doc) => {
+          const data = doc.data();
+          const id = doc.id;
+          const { createdAt } = data;
+
+          return {
+            ...data,
+            id,
+            createdAt: +createdAt.toDate(),
+          };
+        });
+        setPost(clickedPost);
+      });
+    };
+    obtainDevit();
+  }, []);
+
+  useEffect(() => {
     const postMap = post.map((clickedPost) => {
       if (clickedPost.id === postId) {
         setClickedPost(clickedPost);
@@ -41,9 +63,18 @@ export const Modal = ({ timeline }) => {
     });
   }, [post]);
 
-  useEffect(() => {
+  /* useEffect(
+    () =>
+      onSnapshot(doc(db, "devits", postId), (snapshot) => {
+        console.log(snapshot.createdAt);
+        setPost(snapshot.data());
+      }),
+    [db]
+  ); */
+
+  /* useEffect(() => {
     setPost(timeline);
-  }, [db]);
+  }, [db]); */
 
   const sendComment = async (e) => {
     e.preventDefault();
@@ -68,10 +99,9 @@ export const Modal = ({ timeline }) => {
           avatar={clickedPost.avatar}
           content={clickedPost.content}
           id={clickedPost.id}
-          createdAt={clickedPost.createdAt}
           userName={clickedPost.userName}
+          createdAt={clickedPost.createdAt}
         />
-
         <div className='reply-container'>
           {user && user.avatar && (
             <div>

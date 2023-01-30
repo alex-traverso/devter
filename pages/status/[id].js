@@ -1,18 +1,17 @@
 import DevitComplete from "../../components/DevitComplete";
+import { Modal } from "../../components/Modal";
 import Navbar from "../../components/Navbar";
 import { useState, useEffect } from "react";
-import Avatar from "../../components/Avatar";
 
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
 
-import { useTimeAgo } from "../../hooks/useTimeAgo";
-
-import { onSnapshot, doc, collection, query } from "@firebase/firestore";
+import { onSnapshot, collection, query } from "@firebase/firestore";
 import { db } from "../../firebase/client";
 
 export default function DevitPage(props) {
   const [postId, setPostId] = useRecoilState(postIdState);
+  const [isOpen, setIsOpen] = useRecoilState(modalState);
   const [comments, setComments] = useState();
 
   useEffect(() => {
@@ -37,9 +36,6 @@ export default function DevitPage(props) {
     };
     obtainComments();
   }, []);
-
-  console.log(comments);
-  console.log(postId);
 
   return (
     <>
@@ -66,6 +62,7 @@ export default function DevitPage(props) {
           </>
         )}
       </>
+      {isOpen && <Modal />}
       <Navbar />
 
       <style jsx>{`

@@ -81,13 +81,13 @@ const Interactions = ({ id }) => {
             <Reply width={25} height={25} onClick={handleReply} />
             {comments.length > 0 ? <span>{comments.length}</span> : null}
             {/* {comments.length > 0 ? (
-                  <>
-                    <Reply width={25} height={25} onClick={handleReply} />
-                    <span>{comments.length}</span>
-                  </>
-                ) : (
-                  <Reply width={25} height={25} onClick={handleReply} />
-                )} */}
+              <>
+                <Reply width={25} height={25} onClick={handleReply} />
+                <span>{comments.length}</span>
+              </>
+            ) : (
+              <Reply width={25} height={25} onClick={handleReply} />
+            )} */}
           </div>
 
           <Delete
