@@ -41,43 +41,8 @@ export const Modal = ({ timeline }) => {
     });
   }, [post]);
 
-  const timeAgo = useTimeAgo(clickedPost ? clickedPost.createdAt : 0);
-  const createdAtFormated = useDateTimeFormat(
-    clickedPost ? clickedPost.createdAt : 0
-  );
-
-  console.log(post);
-  console.log(clickedPost);
-
   useEffect(() => {
     setPost(timeline);
-    //Obtener clickedPost
-    /* const querySnapshot = query(collection(db, "devits"));
-    onSnapshot(querySnapshot, ({ docs }) => {
-      const newClickedPost = docs.map((doc) => {
-        const data = doc.data();
-        const id = doc.id;
-        const { createdAt } = data;
-
-        return {
-          ...data,
-          id,
-          createdAt: +createdAt.toDate(),
-        };
-      });
-      setPost(newClickedPost);
-    }); */
-    /* onSnapshot(doc(db, "devits", postId), (snapshot) => {
-      console.log(snapshot);
-
-      setClickedPost(snapshot.data());
-    }); */
-    //Problema, cambiar snapshot, importar un componente que tenga la data de cada devit
-    /* onSnapshot(doc(db, "devits", postId), (snapshot) => {
-      console.log(snapshot);
-      
-      setPost(snapshot.data());
-    }); */
   }, [db]);
 
   const sendComment = async (e) => {
@@ -149,6 +114,17 @@ export const Modal = ({ timeline }) => {
           border-radius: 10px;
           width: 90%;
           min-height: 45vh;
+          -webkit-animation: fadein 0.3s;
+          animation: fadein 0.3s;
+        }
+
+        @keyframes fadein {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
 
         .user-reply-container {
