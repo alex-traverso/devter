@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { colors } from "../../styles/theme";
 import Router from "next/router";
 
 //Recoil
@@ -69,46 +69,68 @@ const Interactions = ({ id }) => {
     } else {
       await setDoc(doc(db, "devits", id, "likes", user.uid), {
         username: user.username,
+        userId: user.uid,
       });
     }
   };
+
+  useEffect(() => {
+    onSnapshot(collection(db, "devits", id, "comments"), (snapshot) => {
+      setComments(snapshot.docs);
+    });
+  }, [id]);
 
   return (
     <>
       <div className='icon-container'>
         <div>
           <div className='comments-count-container'>
-            <Reply width={25} height={25} onClick={handleReply} />
-            {comments.length > 0 ? <span>{comments.length}</span> : null}
-            {/* {comments.length > 0 ? (
+            {comments.length > 0 ? (
               <>
-                <Reply width={25} height={25} onClick={handleReply} />
-                <span>{comments.length}</span>
+                <Reply
+                  fill={colors.greyUnselected}
+                  width={18}
+                  height={18}
+                  onClick={handleReply}
+                />
+                <span className='comments-text'>{comments.length}</span>
               </>
             ) : (
-              <Reply width={25} height={25} onClick={handleReply} />
-            )} */}
+              <Reply
+                fill={colors.greyUnselected}
+                width={18}
+                height={18}
+                onClick={handleReply}
+              />
+            )}
           </div>
 
           <Delete
-            width={25}
-            height={25}
-            fill='#AAB8C2'
+            stroke={colors.greyUnselected}
+            width={18}
+            height={18}
             onClick={handleDelete}
           />
           <div className='like-count-container'>
             {likes.length > 0 ? (
               <>
                 <Like
-                  width={25}
-                  height={25}
-                  fill='#E72A4B'
+                  width={18}
+                  height={18}
+                  fill={hasLiked ? colors.red : "none"}
+                  stroke={hasLiked ? colors.red : colors.greyUnselected}
                   onClick={likePost}
                 />
                 <span className='like-text'>{likes.length}</span>
               </>
             ) : (
-              <Like width={25} height={25} fill='#AAB8C2' onClick={likePost} />
+              <Like
+                width={18}
+                height={18}
+                stroke={colors.greyUnselected}
+                fill='none'
+                onClick={likePost}
+              />
             )}
           </div>
         </div>
@@ -133,8 +155,12 @@ const Interactions = ({ id }) => {
           align-items: center;
           gap: 0.3rem;
         }
+
+        .comments-text {
+          color: ${colors.greyUnselected};
+        }
         .like-text {
-          color: #e72a4b;
+          color: ${hasLiked ? colors.red : colors.greyUnselected};
         }
       `}</style>
     </>
