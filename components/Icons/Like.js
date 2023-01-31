@@ -1,7 +1,32 @@
+import { colors } from "../../styles/theme";
 import * as React from "react";
-const Like = (props) => (
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 72' {...props}>
-    <path d='M38.723,12c-7.187,0-11.16,7.306-11.723,8.131C26.437,19.306,22.504,12,15.277,12C8.791,12,3.533,18.163,3.533,24.647 C3.533,39.964,21.891,55.907,27,56c5.109-0.093,23.467-16.036,23.467-31.353C50.467,18.163,45.209,12,38.723,12z' />
+const SVGComponent = (props) => (
+  <svg
+    width='24px'
+    height='24px'
+    viewBox='0 0 32 32'
+    enableBackground='new 0 0 32 32'
+    id='Stock_cut'
+    xmlSpace='preserve'
+    xmlns='http://www.w3.org/2000/svg'
+    xmlnsXlink='http://www.w3.org/1999/xlink'
+    {...props}
+  >
+    <desc />
+    <path
+      d='M28.343,17.48L16,29  L3.657,17.48C1.962,15.898,1,13.684,1,11.365v0C1,6.745,4.745,3,9.365,3h0.17c2.219,0,4.346,0.881,5.915,2.45L16,6l0.55-0.55  C18.119,3.881,20.246,3,22.465,3h0.17C27.255,3,31,6.745,31,11.365v0C31,13.684,30.038,15.898,28.343,17.48z'
+      fill={props}
+      stroke={props}
+      strokeLinejoin='round'
+      strokeMiterlimit={10}
+      strokeWidth={2}
+    />
+    <style jsx>{`
+      svg:hover {
+        stroke: ${colors.red};
+        transition: all 0.3s;
+      }
+    `}</style>
   </svg>
 );
-export default Like;
+export default SVGComponent;
