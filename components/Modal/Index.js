@@ -59,19 +59,6 @@ export const Modal = () => {
     });
   }, [post]);
 
-  /* useEffect(
-    () =>
-      onSnapshot(doc(db, "devits", postId), (snapshot) => {
-        console.log(snapshot.createdAt);
-        setPost(snapshot.data());
-      }),
-    [db]
-  ); */
-
-  /* useEffect(() => {
-    setPost(timeline);
-  }, [db]); */
-
   const sendComment = async (e) => {
     e.preventDefault();
 
@@ -91,54 +78,66 @@ export const Modal = () => {
   return clickedPost ? (
     <>
       <section>
-        <Devit
-          avatar={clickedPost.avatar}
-          content={clickedPost.content}
-          id={clickedPost.id}
-          userName={clickedPost.userName}
-          createdAt={clickedPost.createdAt}
-        />
-        <div className='reply-container'>
-          {user && user.avatar && (
-            <div>
-              <Avatar alt={user.name} src={user.avatar} text={user.name} />
-            </div>
-          )}
-
-          <textarea
-            value={comment}
-            onChange={(e) => {
-              setComment(e.target.value);
-            }}
-            placeholder='Escribe tu respuesta'
-          ></textarea>
+        <div className='modal-container'>
+          <Devit
+            avatar={clickedPost.avatar}
+            content={clickedPost.content}
+            id={clickedPost.id}
+            userName={clickedPost.userName}
+            createdAt={clickedPost.createdAt}
+          />
+          <div className='reply-container'>
+            {user && user.avatar && (
+              <div>
+                <Avatar alt={user.name} src={user.avatar} text={user.name} />
+              </div>
+            )}
+            <textarea
+              value={comment}
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+              placeholder='Escribe tu respuesta'
+            ></textarea>
+          </div>
+          <div className='btn-reply-container'>
+            <button className='btn-reply' onClick={sendComment}>
+              Enviar
+            </button>
+          </div>
+          {isOpen ? (
+            <button
+              className='btn-close-modal'
+              onClick={() => {
+                setIsOpen(false);
+              }}
+            >
+              X
+            </button>
+          ) : null}
         </div>
-        <div className='btn-reply-container'>
-          <button className='btn-reply' onClick={sendComment}>
-            Enviar
-          </button>
-        </div>
-        {isOpen ? (
-          <button
-            className='btn-close-modal'
-            onClick={() => {
-              setIsOpen(false);
-            }}
-          >
-            X
-          </button>
-        ) : null}
       </section>
 
       <style jsx>{`
         section {
+          background-color: rgba(0, 0, 0, 0.5);
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 999;
+          width: 100%;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .modal-container {
           background-color: white;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-          position: absolute;
-          top: 5rem;
-          right: 1rem;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+          position: relative;
           border-radius: 10px;
-          width: 90%;
+          width: 450px;
           min-height: 45vh;
           -webkit-animation: fadein 0.3s;
           animation: fadein 0.3s;
@@ -151,41 +150,6 @@ export const Modal = () => {
           to {
             opacity: 1;
           }
-        }
-
-        .user-reply-container {
-          margin: 1rem;
-          display: flex;
-          align-items: flex-start;
-          gap: 1rem;
-        }
-
-        .user-reply-avatar {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          height: auto;
-          gap: 8px;
-        }
-
-        time {
-          color: #555;
-          font-size: 14px;
-          text-decoration: none;
-        }
-
-        time:hover {
-          text-decoration: underline;
-        }
-
-        .user-reply-info {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .user-reply-info > a {
-          color: ${colors.primary};
         }
 
         .reply-container {
@@ -231,13 +195,15 @@ export const Modal = () => {
 
         textarea {
           align-self: center;
+          margin-bottom: 1rem;
           min-height: 120px;
           width: 80%;
-          outline: 0;
-          border-radius: 10px;
-          padding: 15px;
           resize: none;
+          outline: none;
+          padding: 15px;
           font-size: 18px;
+          border: 1px solid ${colors.greyUnselected};
+          border-radius: 10px;
         }
 
         .img-link {
@@ -250,24 +216,3 @@ export const Modal = () => {
     <Loading width={30} height={30} />
   );
 };
-
-{
-  /* <div className='user-reply-container'>
-  <Avatar src={clickedPost.avatar} />
-  <div>
-    <div className='user-reply-avatar'>
-      <strong>{clickedPost.userName}</strong>
-      <span> . </span>
-      <time>{timeAgo}</time>
-    </div>
-    <div className='user-reply-info'>
-      <div>{clickedPost.content ? <p>{clickedPost.content}</p> : null}</div>
-      {clickedPost.img ? (
-        <Link legacyBehavior href={clickedPost.img}>
-          <a>Imagen / Video</a>
-        </Link>
-      ) : null}
-    </div>
-  </div>
-</div>; */
-}
