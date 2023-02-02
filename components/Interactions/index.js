@@ -9,20 +9,22 @@ import { modalState, postIdState } from "../../atoms/modalAtom";
 import Like from "../Icons/Like";
 import Reply from "../Icons/Reply";
 import Delete from "../Icons/Delete";
+import Retweet from "../Icons/Retweet";
 
 import {
   doc,
   deleteDoc,
   setDoc,
-  updateDoc,
   collection,
   onSnapshot,
+  getDoc,
+  query,
 } from "firebase/firestore";
 import { db } from "../../firebase/client";
 import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
 
-const Interactions = ({ id }) => {
+const Interactions = ({ id, userId }) => {
   const user = useUser();
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
@@ -31,18 +33,27 @@ const Interactions = ({ id }) => {
   const [postId, setPostId] = useRecoilState(postIdState);
   const [comments, setComments] = useState([]);
 
+  const [post, setPost] = useState([]);
+  const [clickedPost, setClickedPost] = useState();
+
   //Arreglar, al clickear hay un error en firebase por la coleccion de comments
   /* const handleClickPost = (e) => {
     Router.push(`/status/${id}`);
   }; */
 
+  //Identifica si el creador del devit esta logeado
+  const isCreator = () => {
+    if (user) {
+      if (user.uid === userId) {
+        return true;
+      }
+    }
+  };
+
   const handleDelete = (e) => {
     e.stopPropagation();
-    listenLatestDevits((newDevits) => {
-      newDevits.findIndex((newDevits) => newDevits.id === user.uid);
-      deleteDoc(doc(db, "devits", id));
-      Router.push("/");
-    });
+    deleteDoc(doc(db, "devits", id));
+    Router.push("/");
   };
 
   const handleReply = (e) => {
@@ -105,12 +116,17 @@ const Interactions = ({ id }) => {
             )}
           </div>
 
-          <Delete
-            stroke={colors.greyUnselected}
-            width={18}
-            height={18}
-            onClick={handleDelete}
-          />
+          {isCreator() ? (
+            <Delete
+              stroke={colors.greyUnselected}
+              width={18}
+              height={18}
+              onClick={handleDelete}
+            />
+          ) : (
+            <Retweet fill={colors.greyUnselected} width={18} height={18} />
+          )}
+
           <div className='like-count-container'>
             {likes.length > 0 ? (
               <>

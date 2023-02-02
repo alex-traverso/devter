@@ -19,6 +19,7 @@ import {
   signInWithPopup,
   GithubAuthProvider,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -107,6 +108,17 @@ export const uploadImage = (file) => {
   // 'file' comes from the Blob or File API
   const uploadTask = uploadBytesResumable(storageRef, file);
   return uploadTask;
+};
+
+// Cierra la sesión del usuario
+export const logOut = async () => {
+  signOut(auth)
+    .then(() => {
+      console.log("Loged out successfully");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export default app;

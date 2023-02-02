@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import { colors } from "../../styles/theme";
 import DevitComplete from "../../components/DevitComplete";
+import Button from "../../components/Button";
 import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
+import { logOut } from "../../firebase/client";
+import LogOut from "../../components/icons/LogOut";
 
 //Recoil
 import { useRecoilState } from "recoil";
@@ -34,6 +38,10 @@ const HomePage = () => {
       </Head>
       <header>
         <h2>Inicio</h2>
+        <button onClick={logOut}>
+          <LogOut fill={colors.white} />
+          Cerrar sesión
+        </button>
       </header>
       <section>
         {timeline.map(
@@ -47,6 +55,7 @@ const HomePage = () => {
               content={content}
               userId={userId}
               createdAt={createdAt}
+              timeline={timeline}
             />
           )
         )}
@@ -59,6 +68,7 @@ const HomePage = () => {
           header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             top: 0;
             border-bottom: 1px solid #eee;
             background-color: #ffffffee;
@@ -75,6 +85,29 @@ const HomePage = () => {
           h2 {
             font-weight: 800;
             padding-left: 15px;
+          }
+
+          button {
+            background-color: ${colors.dark};
+            color: ${colors.white};
+            margin-right: 15px;
+            border: 0;
+            cursor: pointer;
+            border-radius: 10rem;
+            font-weight: 700;
+            padding: 8px 24px;
+            transition: all 0.3s ease;
+            display: flex;
+            user-select: none;
+            align-items: center;
+          }
+
+          button > :global(svg) {
+            margin-right: 8px;
+          }
+
+          button:hover {
+            background-color: ${colors.red};
           }
         `}
       </style>

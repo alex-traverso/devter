@@ -4,15 +4,11 @@ import Devit from "../Devit";
 import { colors } from "../../styles/theme";
 import useUser from "../../hooks/useUser";
 
-import { useTimeAgo } from "../../hooks/useTimeAgo";
-import useDateTimeFormat from "../../hooks/useDateTimeFormat";
 import Loading from "../Loading";
 
 import {
   onSnapshot,
-  doc,
   addDoc,
-  getDoc,
   query,
   collection,
   Timestamp,
@@ -23,7 +19,7 @@ import { modalState, postIdState } from "../../atoms/modalAtom";
 import Router from "next/router";
 import Link from "next/link";
 
-export const Modal = ({ timeline }) => {
+export const Modal = () => {
   const user = useUser();
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);

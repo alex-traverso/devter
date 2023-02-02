@@ -9,6 +9,7 @@ const DevitComplete = ({
   createdAt,
   id,
   img,
+  timeline,
 }) => {
   return (
     <>
@@ -23,7 +24,7 @@ const DevitComplete = ({
           userId={userId}
           createdAt={createdAt}
         />
-        <Interactions id={id} />
+        <Interactions id={id} userId={userId} />
       </div>
 
       <style jsx>{`
