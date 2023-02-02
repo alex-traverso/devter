@@ -57,6 +57,7 @@ export default function Devit({
         article:hover {
           background-color: #f5f8fa;
           cursor: pointer;
+          border-radius: inherit;
         }
 
         section {
