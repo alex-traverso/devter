@@ -25,15 +25,15 @@ export default function Devit({
 
   const [postId, setPostId] = useRecoilState(postIdState);
 
-  const handleArticleClick = (e) => {
+  /* const handleArticleClick = (e) => {
     e.preventDefault();
     setPostId(id);
     Router.push(`/status/${id}`);
-  };
+  }; */
 
   return (
     <>
-      <article onClick={handleArticleClick}>
+      <article>
         <div className='avatar-container'>
           <Avatar src={avatar} alt={userName} />
         </div>
@@ -52,12 +52,6 @@ export default function Devit({
         article {
           display: flex;
           padding: 10px 15px;
-        }
-
-        article:hover {
-          background-color: #f5f8fa;
-          cursor: pointer;
-          border-radius: inherit;
         }
 
         section {

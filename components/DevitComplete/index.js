@@ -1,5 +1,9 @@
 import Devit from "../Devit";
 import Interactions from "../Interactions";
+import Router from "next/router";
+//Recoil
+import { useRecoilState } from "recoil";
+import { modalState, postIdState } from "../../atoms/modalAtom";
 
 const DevitComplete = ({
   userId,
@@ -9,11 +13,18 @@ const DevitComplete = ({
   createdAt,
   id,
   img,
-  timeline,
 }) => {
+  const [postId, setPostId] = useRecoilState(postIdState);
+
+  const handleArticleClick = (e) => {
+    e.preventDefault();
+    setPostId(id);
+    Router.push(`/status/${id}`);
+  };
+
   return (
     <>
-      <div>
+      <div onClick={handleArticleClick}>
         <Devit
           key={id}
           id={id}
