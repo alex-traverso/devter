@@ -1,5 +1,5 @@
 import DevitComplete from "../../components/DevitComplete";
-import Modal from "../../components/Modal/Index";
+import { Modal } from "../../components/Modal";
 import Navbar from "../../components/Navbar";
 import { useState, useEffect } from "react";
 
@@ -9,7 +9,7 @@ import { modalState, postIdState } from "../../atoms/modalAtom";
 import { onSnapshot, collection, query } from "@firebase/firestore";
 import { db } from "../../firebase/client";
 
-export default function DevitPage(props) {
+export default function DevitPage({ props }) {
   const [postId, setPostId] = useRecoilState(postIdState);
   const [isOpen, setIsOpen] = useRecoilState(modalState);
   const [comments, setComments] = useState();
@@ -95,18 +95,35 @@ export default function DevitPage(props) {
   );
 }
 
+export async function getServerSideProps(context) {
+  const { query } = context;
+  const { id } = query;
+
+  const url = `${process.env.ID_URL}/api/devits/${id}`;
+  const response = await fetch(url);
+  const props = await response.json();
+
+  return {
+    props: {
+      props: props,
+    },
+  };
+}
+
 //Data fetching usando getInitialProps
-DevitPage.getInitialProps = async (context) => {
+/* DevitPage.getInitialProps = async (context) => {
   const { query, res } = context;
   const { id } = query;
+
+  const url = process.env.ID_URL;
+  console.log(url);
 
   return await fetch(`http://localhost:3000/api/devits/${id}`).then(
     (apiResponse) => {
       if (apiResponse.ok) return apiResponse.json();
       if (res) {
         res.writeHead(404).end();
-        console.log(res);
       }
     }
   );
-};
+}; */

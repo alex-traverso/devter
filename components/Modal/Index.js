@@ -3,9 +3,7 @@ import Avatar from "../Avatar";
 import Devit from "../Devit";
 import { colors } from "../../styles/theme";
 import useUser from "../../hooks/useUser";
-
 import Loading from "../Loading";
-
 import {
   onSnapshot,
   addDoc,
