@@ -70,7 +70,6 @@ export const addDevit = async ({ avatar, content, userId, userName, img }) => {
       userId,
       userName,
       createdAt: Timestamp.fromDate(new Date()),
-      sharedCount: 0,
     });
   } catch (err) {
     console.log(err);

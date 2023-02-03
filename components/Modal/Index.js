@@ -17,7 +17,6 @@ import { db } from "../../firebase/client";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
 import Router from "next/router";
-import Link from "next/link";
 
 export const Modal = () => {
   const user = useUser();

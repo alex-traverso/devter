@@ -26,7 +26,7 @@ export default function Navbar() {
           left: 0;
           border-top: 1px solid #ccc;
           width: 100%;
-          height: 3.5rem;
+          height: 50px;
           background-color: #fff;
           display: flex;
           align-items: center;
