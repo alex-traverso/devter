@@ -12,7 +12,7 @@ import Loading from "../../components/Loading";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atoms/modalAtom";
 //Modal
-import { Modal } from "../../components/Modal";
+import Modal from "../../components/Modal";
 import Head from "next/head";
 //Navbar
 import Navbar from "../../components/Navbar";
