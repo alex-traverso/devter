@@ -18,7 +18,7 @@ import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
 import Router from "next/router";
 
-export const Modal = () => {
+const Modal = () => {
   const user = useUser();
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);
@@ -215,3 +215,5 @@ export const Modal = () => {
     <Loading width={30} height={30} />
   );
 };
+
+export default Modal;
