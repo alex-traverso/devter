@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { colors } from "../../styles/theme";
 import DevitComplete from "../../components/DevitComplete";
-import Button from "../../components/Button";
+import Avatar from "../../components/Avatar";
 import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
 import { logOut } from "../../firebase/client";
 import LogOut from "../../components/icons/LogOut";
+import Loading from "../../components/Loading";
 
 //Recoil
 import { useRecoilState } from "recoil";
@@ -38,10 +39,16 @@ const HomePage = () => {
       </Head>
       <header>
         <h2>Inicio</h2>
-        <button onClick={logOut}>
-          <LogOut fill={colors.white} />
-          Cerrar sesión
-        </button>
+        <div>
+          {user ? (
+            <Avatar src={user.avatar} alt={user.displayName} />
+          ) : (
+            <Loading />
+          )}
+          <button onClick={logOut}>
+            <LogOut stroke={colors.white} height={25} width={25} />
+          </button>
+        </div>
       </header>
       <section>
         {timeline.map(
@@ -73,7 +80,7 @@ const HomePage = () => {
             border-bottom: 1px solid #eee;
             background-color: #ffffffee;
             backdrop-filter: blur(3px);
-            height: 3.75rem;
+            height: 4rem;
             position: sticky;
             width: 100%;
           }
@@ -87,6 +94,13 @@ const HomePage = () => {
             padding-left: 15px;
           }
 
+          div {
+            display: flex;
+            align-items: center;
+            height: auto;
+            gap: 0.5rem;
+          }
+
           button {
             background-color: ${colors.dark};
             color: ${colors.white};
@@ -96,14 +110,12 @@ const HomePage = () => {
             border-radius: 10rem;
             font-weight: 700;
             padding: 8px 24px;
+            width: 4.5rem;
+            height: 2.6rem;
             transition: all 0.3s ease;
             display: flex;
             user-select: none;
             align-items: center;
-          }
-
-          button > :global(svg) {
-            margin-right: 8px;
           }
 
           button:hover {

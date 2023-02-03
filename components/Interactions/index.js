@@ -17,29 +17,20 @@ import {
   setDoc,
   collection,
   onSnapshot,
-  getDoc,
-  query,
 } from "firebase/firestore";
 import { db } from "../../firebase/client";
 import useUser from "../../hooks/useUser";
-import { listenLatestDevits } from "../../firebase/client";
 
 const Interactions = ({ id, userId }) => {
   const user = useUser();
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
+  const [shares, setShares] = useState([]);
+  const [hasShared, setHasShared] = useState(false);
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
   const [comments, setComments] = useState([]);
-
-  const [post, setPost] = useState([]);
-  const [clickedPost, setClickedPost] = useState();
-
-  //Arreglar, al clickear hay un error en firebase por la coleccion de comments
-  /* const handleClickPost = (e) => {
-    Router.push(`/status/${id}`);
-  }; */
 
   //Identifica si el creador del devit esta logeado
   const isCreator = () => {
@@ -86,6 +77,29 @@ const Interactions = ({ id, userId }) => {
   };
 
   useEffect(() => {
+    onSnapshot(collection(db, "devits", id, "shares"), (snapshot) => {
+      setShares(snapshot.docs);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    setHasShared(shares.findIndex((like) => like.id === user.uid) !== -1);
+  }, [shares]);
+
+  const sharePost = async (e) => {
+    e.stopPropagation();
+    const devitShared = doc(db, "devits", id, "shares", user.uid);
+    if (hasShared) {
+      await deleteDoc(devitShared);
+    } else {
+      await setDoc(devitShared, {
+        username: user.username,
+        userId: user.uid,
+      });
+    }
+  };
+
+  useEffect(() => {
     onSnapshot(collection(db, "devits", id, "comments"), (snapshot) => {
       setComments(snapshot.docs);
     });
@@ -95,7 +109,7 @@ const Interactions = ({ id, userId }) => {
     <>
       <div className='icon-container'>
         <div>
-          <div className='comments-count-container'>
+          <div className='interactions-count-container'>
             {comments.length > 0 ? (
               <>
                 <Reply
@@ -116,18 +130,35 @@ const Interactions = ({ id, userId }) => {
             )}
           </div>
 
-          {isCreator() ? (
-            <Delete
-              stroke={colors.greyUnselected}
-              width={18}
-              height={18}
-              onClick={handleDelete}
-            />
-          ) : (
-            <Retweet fill={colors.greyUnselected} width={18} height={18} />
-          )}
+          <div className='interactions-count-container'>
+            {isCreator() ? (
+              <Delete
+                stroke={colors.greyUnselected}
+                width={18}
+                height={18}
+                onClick={handleDelete}
+              />
+            ) : shares.length > 0 ? (
+              <>
+                <Retweet
+                  fill={hasShared ? colors.green : colors.greyUnselected}
+                  width={18}
+                  height={18}
+                  onClick={sharePost}
+                />
+                <span className='shares-text'>{shares.length}</span>
+              </>
+            ) : (
+              <Retweet
+                fill={colors.greyUnselected}
+                width={18}
+                height={18}
+                onClick={sharePost}
+              />
+            )}
+          </div>
 
-          <div className='like-count-container'>
+          <div className='interactions-count-container'>
             {likes.length > 0 ? (
               <>
                 <Like
@@ -165,11 +196,11 @@ const Interactions = ({ id, userId }) => {
           width: 100%;
         }
 
-        .comments-count-container,
-        .like-count-container {
+        .interactions-count-container {
           display: flex;
           align-items: center;
           gap: 0.3rem;
+          width: 2rem;
         }
 
         .comments-text {
@@ -177,6 +208,9 @@ const Interactions = ({ id, userId }) => {
         }
         .like-text {
           color: ${hasLiked ? colors.red : colors.greyUnselected};
+        }
+        .shares-text {
+          color: ${hasShared ? colors.green : colors.greyUnselected};
         }
       `}</style>
     </>
