@@ -109,8 +109,8 @@ const HomePage = () => {
             cursor: pointer;
             border-radius: 10rem;
             font-weight: 700;
-            padding: 8px 24px;
-            width: 4.5rem;
+            padding: 8px 20px;
+            width: 4.2rem;
             height: 2.6rem;
             transition: all 0.3s ease;
             display: flex;

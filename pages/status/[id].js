@@ -105,20 +105,8 @@ DevitPage.getInitialProps = async (context) => {
       if (apiResponse.ok) return apiResponse.json();
       if (res) {
         res.writeHead(404).end();
+        console.log(res);
       }
     }
   );
 };
-
-{
-  /* <article className='comments' key={`${comment.uid}-${i}`}>
-                  <div className='avatar-container'>
-                    <Avatar src={comment.avatar} alt={comment.userName} />
-                  </div>
-                  <section className='comment'>
-                    <strong>{comment.userName}</strong>
-                    <span> . </span>
-                    <p>{comment.comment}</p>
-                  </section>
-                </article> */
-}
