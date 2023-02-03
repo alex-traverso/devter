@@ -4,15 +4,9 @@ import {
   addDoc,
   collection,
   Timestamp,
-  doc,
-  getDoc,
   onSnapshot,
-  getDocs,
   query,
   orderBy,
-  updateDoc,
-  increment,
-  setDoc,
 } from "firebase/firestore";
 import {
   getAuth,

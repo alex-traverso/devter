@@ -2,14 +2,6 @@ import Avatar from "../../components/Avatar";
 import { useTimeAgo } from "../../hooks/useTimeAgo";
 import useDateTimeFormat from "../../hooks/useDateTimeFormat";
 import Link from "next/link";
-import Router from "next/router";
-import { useState } from "react";
-
-//Recoil
-import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "../../atoms/modalAtom";
-
-import useUser from "../../hooks/useUser";
 
 export default function Devit({
   id,
@@ -21,15 +13,6 @@ export default function Devit({
 }) {
   const timeAgo = useTimeAgo(createdAt);
   const createdAtFormated = useDateTimeFormat(createdAt);
-  const user = useUser();
-
-  const [postId, setPostId] = useRecoilState(postIdState);
-
-  /* const handleArticleClick = (e) => {
-    e.preventDefault();
-    setPostId(id);
-    Router.push(`/status/${id}`);
-  }; */
 
   return (
     <>
