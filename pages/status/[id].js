@@ -1,5 +1,5 @@
 import DevitComplete from "../../components/DevitComplete";
-import { Modal } from "../../components/Modal";
+import Modal from "../../components/Modal/Index";
 import Navbar from "../../components/Navbar";
 import { useState, useEffect } from "react";
 
