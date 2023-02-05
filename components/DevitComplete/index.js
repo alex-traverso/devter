@@ -3,7 +3,7 @@ import Interactions from "../Interactions";
 import Router from "next/router";
 //Recoil
 import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "../../atoms/modalAtom";
+import { postIdState } from "../../atoms/modalAtom";
 
 const DevitComplete = ({
   userId,

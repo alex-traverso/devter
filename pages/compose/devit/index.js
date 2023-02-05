@@ -104,7 +104,7 @@ export default function ComposeTweet() {
     try {
       Router.push("/home");
     } catch (error) {
-      console.error(err);
+      console.error(error);
       setStatus(COMPOSE_STATES.ERROR);
     }
   };

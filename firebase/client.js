@@ -12,7 +12,6 @@ import {
   getAuth,
   signInWithPopup,
   GithubAuthProvider,
-  onAuthStateChanged,
   signOut,
 } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable } from "firebase/storage";

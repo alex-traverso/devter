@@ -1,5 +1,3 @@
-import * as React from "react";
-
 export default function Logo(props) {
   return (
     <svg viewBox='0 0 78.01 98.67' {...props}>

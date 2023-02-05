@@ -1,5 +1,3 @@
-import * as React from "react";
-
 const ArrowLeft = (props) => {
   return (
     <svg width={21} height={21} viewBox='0 0 21 21' {...props}>
