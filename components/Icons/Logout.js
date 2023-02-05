@@ -1,4 +1,4 @@
-const LogOut = (props) => (
+const SVGComponent = (props) => (
   <svg
     width={props}
     height={props}
@@ -16,4 +16,4 @@ const LogOut = (props) => (
     />
   </svg>
 );
-export default LogOut;
+export default SVGComponent;

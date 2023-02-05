@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { colors } from "../../styles/theme";
 import DevitComplete from "../../components/DevitComplete";
+import LogOut from "../../components/Icons/LogOut";
 import Avatar from "../../components/Avatar";
 import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
 import { logOut } from "../../firebase/client";
-import LogOut from "../../components/Icons/LogOut";
 import Loading from "../../components/Loading";
 
 //Recoil
