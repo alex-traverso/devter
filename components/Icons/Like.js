@@ -1,5 +1,4 @@
 import { colors } from "../../styles/theme";
-import * as React from "react";
 const SVGComponent = (props) => (
   <svg
     width='24px'

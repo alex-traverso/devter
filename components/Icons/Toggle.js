@@ -1,4 +1,3 @@
-import * as React from "react";
 const Toggle = (props) => (
   <svg
     fill='#000000'

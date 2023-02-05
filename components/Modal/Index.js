@@ -49,7 +49,7 @@ const Modal = () => {
   }, []);
 
   useEffect(() => {
-    const postMap = post.map((clickedPost) => {
+    post.map((clickedPost) => {
       if (clickedPost.id === postId) {
         setClickedPost(clickedPost);
       }

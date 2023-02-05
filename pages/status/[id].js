@@ -109,21 +109,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
-//Data fetching usando getInitialProps
-/* DevitPage.getInitialProps = async (context) => {
-  const { query, res } = context;
-  const { id } = query;
-
-  const url = process.env.ID_URL;
-  console.log(url);
-
-  return await fetch(`http://localhost:3000/api/devits/${id}`).then(
-    (apiResponse) => {
-      if (apiResponse.ok) return apiResponse.json();
-      if (res) {
-        res.writeHead(404).end();
-      }
-    }
-  );
-}; */

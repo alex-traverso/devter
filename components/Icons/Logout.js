@@ -1,4 +1,3 @@
-import * as React from "react";
 const LogOut = (props) => (
   <svg
     width={props}

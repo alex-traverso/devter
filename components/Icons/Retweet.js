@@ -1,4 +1,3 @@
-import * as React from "react";
 import { colors } from "../../styles/theme";
 
 const SVGComponent = (props) => (

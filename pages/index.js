@@ -8,7 +8,7 @@ import { colors } from "../styles/theme";
 import Loading from "../components/Loading";
 
 //  Firebase Client
-import { loginWithGithub, authChange } from "/firebase/client.js";
+import { loginWithGithub } from "/firebase/client.js";
 
 //Hook useUser
 import useUser, { USER_STATES } from "../hooks/useUser";

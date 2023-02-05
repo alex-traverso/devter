@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    "eslint:recomended",
+    "eslint:recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
   ],
@@ -17,5 +17,9 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react"],
-  rules: {},
+  rules: {
+    "react/no-unknown-property": "off",
+    "react/prop-types": "off",
+    "no-unused-vars": "off",
+  },
 };
