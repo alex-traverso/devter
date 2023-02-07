@@ -10,6 +10,8 @@ try {
     }),
     databaseURL: process.env.FIREBASE_DATABASE_URL,
   });
-} catch (err) {}
+} catch (err) {
+  console.error(err);
+}
 
 export const firestore = admin.firestore();
