@@ -6,11 +6,14 @@ import { addDevit, uploadImage } from "../../firebase/client";
 import { getDownloadURL } from "firebase/storage";
 import Button from "../Button";
 import Avatar from "../Avatar";
-import EmojiPicker from "emoji-picker-react";
+//Iconos
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+
 //Router
 import Router from "next/router";
 import UploadImageIcon from "../Icons/UploadImageIcon";
-import Emoji from "../Icons/Emoji";
+import EmojiIcon from "../Icons/EmojiIcon";
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -40,10 +43,8 @@ export default function ComposeHome() {
   const [imgURL, setImgURL] = useState(null);
 
   //iconos
-  const [inputStr, setInputStr] = useState();
+  const [selectedEmoji, setSelectedEmoji] = useState();
   const [showPicker, setShowPicker] = useState(false);
-
-  console.log(inputStr);
 
   useEffect(() => {
     if (task) {
@@ -99,7 +100,6 @@ export default function ComposeHome() {
       setStatus(COMPOSE_STATES.NONE);
     }
     setMessage(value);
-    setInputStr(value);
   };
 
   const handleSubmit = (event) => {
@@ -147,9 +147,12 @@ export default function ComposeHome() {
     status === COMPOSE_STATES.LOADING ||
     status === COMPOSE_STATES.ERROR_LENGTH;
 
-  const onEmojiClick = (event, emojiObject) => {
-    setInputStr((prevInput) => prevInput + emojiObject.emoji);
-    setShowPicker(false);
+  const addEmoji = (e) => {
+    let sym = e.unified.split("-");
+    let codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codesArray);
+    setMessage(message + emoji);
   };
 
   return (
@@ -170,6 +173,7 @@ export default function ComposeHome() {
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
+            value={message}
             placeholder='¿Que está pasando?'
           ></textarea>
           {status === COMPOSE_STATES.ERROR_LENGTH ? (
@@ -185,18 +189,14 @@ export default function ComposeHome() {
               <UploadImageIcon width={25} height={25} fill={colors.primary} />
               <input id='file' type='file' />
             </label>
-            <Emoji
+            <EmojiIcon
               width={25}
               height={25}
               fill={colors.primary}
               onClick={() => setShowPicker((val) => !val)}
             />
             {showPicker && (
-              <EmojiPicker
-                className='picker'
-                width='80%'
-                onEmojiClick={onEmojiClick}
-              />
+              <Picker data={data} onEmojiSelect={addEmoji} theme='light' />
             )}
           </div>
 

@@ -8,7 +8,7 @@ import { listenLatestDevits } from "../../firebase/client";
 import { logOut } from "../../firebase/client";
 import Loading from "../../components/Loading";
 import UploadImageIcon from "../../components/Icons/UploadImageIcon";
-import Emoji from "../../components/Icons/Emoji";
+import Emoji from "../../components/Icons/EmojiIcon";
 import ComposeHome from "../../components/ComposeHome";
 
 //Recoil
