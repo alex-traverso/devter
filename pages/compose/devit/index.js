@@ -6,12 +6,15 @@ import { addDevit, uploadImage } from "../../../firebase/client";
 import { getDownloadURL } from "firebase/storage";
 import Button from "../../../components/Button";
 import Avatar from "../../../components/Avatar";
-import EmojiPicker from "emoji-picker-react";
+//Iconos
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
+
 //Router
 import Router from "next/router";
 import Navbar from "../../../components/Navbar";
 import UploadImageIcon from "../../../components/Icons/UploadImageIcon";
-import Emoji from "../../../components/Icons/Emoji";
+import EmojiIcon from "../../../components/Icons/EmojiIcon";
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -148,9 +151,12 @@ export default function ComposeTweet() {
     status === COMPOSE_STATES.LOADING ||
     status === COMPOSE_STATES.ERROR_LENGTH;
 
-  const onEmojiClick = (event, emojiObject) => {
-    setInputStr((prevInput) => prevInput + emojiObject.emoji);
-    setShowPicker(false);
+  const addEmoji = (e) => {
+    let sym = e.unified.split("-");
+    let codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codesArray);
+    setMessage(message + emoji);
   };
 
   return (
@@ -170,6 +176,7 @@ export default function ComposeTweet() {
             onChange={handleChange}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
+            value={message}
             onDrop={handleDrop}
             placeholder='¿Que está pasando?'
           ></textarea>
@@ -186,18 +193,14 @@ export default function ComposeTweet() {
               <UploadImageIcon width={25} height={25} fill={colors.primary} />
               <input id='file' type='file' />
             </label>
-            <Emoji
+            <EmojiIcon
               width={25}
               height={25}
               fill={colors.primary}
               onClick={() => setShowPicker((val) => !val)}
             />
             {showPicker && (
-              <EmojiPicker
-                className='picker'
-                width='80%'
-                onEmojiClick={onEmojiClick}
-              />
+              <Picker data={data} onEmojiSelect={addEmoji} theme='light' />
             )}
           </div>
 
