@@ -7,8 +7,6 @@ import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
 import { logOut } from "../../firebase/client";
 import Loading from "../../components/Loading";
-import UploadImageIcon from "../../components/Icons/UploadImageIcon";
-import Emoji from "../../components/Icons/EmojiIcon";
 import ComposeHome from "../../components/ComposeHome";
 
 //Recoil
@@ -83,8 +81,9 @@ const HomePage = () => {
             align-items: center;
             justify-content: space-between;
             top: 0;
+            z-index: 100;
             border-bottom: 1px solid #eee;
-            background-color: #ffffffee;
+            background-color: #ffffff;
             backdrop-filter: blur(3px);
             height: 4rem;
             position: sticky;
@@ -104,6 +103,7 @@ const HomePage = () => {
             display: flex;
             align-items: center;
             height: auto;
+
             gap: 0.5rem;
           }
 

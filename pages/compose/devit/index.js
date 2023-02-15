@@ -44,10 +44,7 @@ export default function ComposeTweet() {
   const [imgURL, setImgURL] = useState(null);
 
   //iconos
-  const [inputStr, setInputStr] = useState();
   const [showPicker, setShowPicker] = useState(false);
-
-  console.log(inputStr);
 
   useEffect(() => {
     if (task) {
@@ -93,17 +90,17 @@ export default function ComposeTweet() {
     }
   }, [task]);
 
-  //ARREGLAR, QUE SE MUESTRE EL EMOJI EN LA PANTALLA
   //AGREGAR CONTADOR DE CARACTERES
   const handleChange = (e) => {
     const { value } = e.target;
+
     if (value.length >= 140) {
       setStatus(COMPOSE_STATES.ERROR_LENGTH);
     } else {
       setStatus(COMPOSE_STATES.NONE);
     }
+
     setMessage(value);
-    setInputStr(value);
   };
 
   const handleSubmit = (event) => {
@@ -180,9 +177,7 @@ export default function ComposeTweet() {
             onDrop={handleDrop}
             placeholder='¿Que está pasando?'
           ></textarea>
-          {status === COMPOSE_STATES.ERROR_LENGTH ? (
-            <p className='error-length'>El máximo de caracteres es de 140</p>
-          ) : null}
+          <p className='error-length'>{message.length}/140</p>
           <div className='img-icon-container'>
             <label
               for='file'
@@ -216,7 +211,7 @@ export default function ComposeTweet() {
               <img src={imgURL}></img>
             </section>
           ) : null}
-          <div>
+          <div className='submit-btn'>
             <Button disabled={isButtonDisabled}>Devittear</Button>
           </div>
         </form>
@@ -226,6 +221,10 @@ export default function ComposeTweet() {
       <style jsx>{`
         div {
           padding: 15px;
+        }
+
+        .submit-btn {
+          padding-left: 0;
         }
 
         form {
@@ -252,8 +251,6 @@ export default function ComposeTweet() {
           display: flex;
           justify-content: start;
           gap: 0.5rem;
-          border-top: 1px solid ${colors.greyUnselected};
-          border-bottom: 1px solid ${colors.greyUnselected};
           margin-top: 12px;
           padding: 7px 0;
         }
@@ -305,7 +302,8 @@ export default function ComposeTweet() {
 
         .error-length {
           font-size: 0.9rem;
-          color: #f4212e;
+          margin-bottom: 0;
+          color: ${message.length >= 100 ? "#f4212e" : "#000"};
         }
       `}</style>
     </>

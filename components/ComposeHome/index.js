@@ -43,7 +43,6 @@ export default function ComposeHome() {
   const [imgURL, setImgURL] = useState(null);
 
   //iconos
-  const [selectedEmoji, setSelectedEmoji] = useState();
   const [showPicker, setShowPicker] = useState(false);
 
   useEffect(() => {
@@ -90,8 +89,6 @@ export default function ComposeHome() {
     }
   }, [task]);
 
-  //ARREGLAR, QUE SE MUESTRE EL EMOJI EN LA PANTALLA
-  //AGREGAR CONTADOR DE CARACTERES
   const handleChange = (e) => {
     const { value } = e.target;
     if (value.length >= 140) {
@@ -176,9 +173,7 @@ export default function ComposeHome() {
             value={message}
             placeholder='¿Que está pasando?'
           ></textarea>
-          {status === COMPOSE_STATES.ERROR_LENGTH ? (
-            <p className='error-length'>El máximo de caracteres es de 140</p>
-          ) : null}
+          <p className='error-length'>{message.length}/140</p>
           <div className='img-icon-container'>
             <label
               for='file'
@@ -212,7 +207,7 @@ export default function ComposeHome() {
               <img src={imgURL}></img>
             </section>
           ) : null}
-          <div>
+          <div className='submit-btn'>
             <Button disabled={isButtonDisabled}>Devittear</Button>
           </div>
         </form>
@@ -221,6 +216,10 @@ export default function ComposeHome() {
       <style jsx>{`
         div {
           padding: 15px;
+        }
+
+        .submit-btn {
+          padding-left: 0;
         }
 
         form {
@@ -298,7 +297,8 @@ export default function ComposeHome() {
 
         .error-length {
           font-size: 0.9rem;
-          color: #f4212e;
+          margin-bottom: 0;
+          color: ${message.length >= 100 ? "#f4212e" : "#000"};
         }
       `}</style>
     </>
