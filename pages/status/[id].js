@@ -52,10 +52,11 @@ export default function DevitPage({ props }) {
             <div>{comments.length === 0 && null}</div>
             <div className='comments-container'>
               {comments.map(
-                ({ userId, userName, avatar, content, createdAt, id }) => (
+                ({ userId, userName, avatar, content, createdAt, id, img }) => (
                   <DevitInteractions
                     key={id}
                     id={id}
+                    img={img}
                     userName={userName}
                     avatar={avatar}
                     content={content}
