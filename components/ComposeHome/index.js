@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
-import { colors } from "../../../styles/theme";
+import { colors } from "../../styles/theme";
 import Head from "next/head";
-import useUser from "../../../hooks/useUser";
-import { addDevit, uploadImage } from "../../../firebase/client";
+import useUser from "../../hooks/useUser";
+import { addDevit, uploadImage } from "../../firebase/client";
 import { getDownloadURL } from "firebase/storage";
-import Button from "../../../components/Button";
-import Avatar from "../../../components/Avatar";
+import Button from "../Button";
+import Avatar from "../Avatar";
 import EmojiPicker from "emoji-picker-react";
 //Router
 import Router from "next/router";
-import Navbar from "../../../components/Navbar";
-import UploadImageIcon from "../../../components/Icons/UploadImageIcon";
-import Emoji from "../../../components/Icons/Emoji";
+import UploadImageIcon from "../Icons/UploadImageIcon";
+import Emoji from "../Icons/Emoji";
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -30,7 +29,7 @@ const DRAG_IMAGE_STATES = {
   COMPLETE: 3,
 };
 
-export default function ComposeTweet() {
+export default function ComposeHome() {
   const user = useUser();
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(COMPOSE_STATES.USER_NOT_KNOWN);
@@ -114,7 +113,7 @@ export default function ComposeTweet() {
       userName: user.username,
     });
     try {
-      Router.push("/home");
+      Router.push("/");
     } catch (error) {
       console.error(error);
       setStatus(COMPOSE_STATES.ERROR);
@@ -218,7 +217,6 @@ export default function ComposeTweet() {
           </div>
         </form>
       </section>
-      <Navbar />
 
       <style jsx>{`
         div {
@@ -249,8 +247,6 @@ export default function ComposeTweet() {
           display: flex;
           justify-content: start;
           gap: 0.5rem;
-          border-top: 1px solid ${colors.greyUnselected};
-          border-bottom: 1px solid ${colors.greyUnselected};
           margin-top: 12px;
           padding: 7px 0;
         }

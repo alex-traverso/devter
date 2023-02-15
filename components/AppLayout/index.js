@@ -21,27 +21,23 @@ const AppLayout = ({ children }) => {
             height: 100%;
             width: 100%;
             border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             position: relative;
-             {
-              /* justify-content: space-between; */
-            }
           }
 
           @media (min-width: 425px) {
             main {
-              height: 90vh;
-              width: 300px;
+              height: 95vh;
+              width: 400px;
             }
           }
 
           @media (min-width: 768px) {
             main {
-              height: 90vh;
-              width: 500px;
+              width: 600px;
             }
           }
         `}

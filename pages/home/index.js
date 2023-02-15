@@ -7,6 +7,9 @@ import useUser from "../../hooks/useUser";
 import { listenLatestDevits } from "../../firebase/client";
 import { logOut } from "../../firebase/client";
 import Loading from "../../components/Loading";
+import UploadImageIcon from "../../components/Icons/UploadImageIcon";
+import Emoji from "../../components/Icons/Emoji";
+import ComposeHome from "../../components/ComposeHome";
 
 //Recoil
 import { useRecoilState } from "recoil";
@@ -50,6 +53,9 @@ const HomePage = () => {
           </button>
         </div>
       </header>
+      <div className='compose-container'>
+        <ComposeHome />
+      </div>
       <section>
         {timeline.map(
           ({ userId, userName, avatar, content, createdAt, id, img }) => (
