@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Head from "next/head";
 import Avatar from "../Avatar";
 import Devit from "../Devit";
 import { colors } from "../../styles/theme";
@@ -22,6 +23,7 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import UploadImageIcon from "../Icons/UploadImageIcon";
 import EmojiIcon from "../Icons/EmojiIcon";
+import LenghtCount from "../LengthCount";
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -197,6 +199,9 @@ const Modal = () => {
 
   return clickedPost ? (
     <>
+      <Head>
+        <title>Responde un Devit / Devter</title>
+      </Head>
       <section>
         <div className='modal-container'>
           <Devit
@@ -222,7 +227,7 @@ const Modal = () => {
                 onChange={handleChange}
                 placeholder='Escribe tu respuesta'
               ></textarea>
-              <p className='error-length'>{comment.length}/140</p>
+
               <div className='img-icon-container'>
                 <label
                   for='file'
@@ -243,6 +248,14 @@ const Modal = () => {
                   fill={colors.primary}
                   onClick={() => setShowPicker((val) => !val)}
                 />
+                {comment ? (
+                  <LenghtCount
+                    height={25}
+                    width={25}
+                    strokeWidth={8}
+                    percentage={comment.length}
+                  />
+                ) : null}
               </div>
               {showPicker && (
                 <Picker
@@ -321,6 +334,10 @@ const Modal = () => {
           gap: 0.5rem;
           margin-top: 12px;
           padding: 7px 0;
+        }
+
+        label {
+          height: 25px;
         }
 
         input[type="file"]#file {

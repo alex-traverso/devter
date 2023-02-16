@@ -15,6 +15,7 @@ import Router from "next/router";
 import Navbar from "../../../components/Navbar";
 import UploadImageIcon from "../../../components/Icons/UploadImageIcon";
 import EmojiIcon from "../../../components/Icons/EmojiIcon";
+import LenghtCount from "../../../components/LengthCount";
 
 const COMPOSE_STATES = {
   USER_NOT_KNOWN: 0,
@@ -177,7 +178,6 @@ export default function ComposeTweet() {
             onDrop={handleDrop}
             placeholder='¿Que está pasando?'
           ></textarea>
-          <p className='error-length'>{message.length}/140</p>
           <div className='img-icon-container'>
             <label
               for='file'
@@ -194,6 +194,14 @@ export default function ComposeTweet() {
               fill={colors.primary}
               onClick={() => setShowPicker((val) => !val)}
             />
+            {message ? (
+              <LenghtCount
+                height={25}
+                width={25}
+                strokeWidth={8}
+                percentage={message.length}
+              />
+            ) : null}
             {showPicker && (
               <Picker data={data} onEmojiSelect={addEmoji} theme='light' />
             )}
@@ -253,6 +261,10 @@ export default function ComposeTweet() {
           gap: 0.5rem;
           margin-top: 12px;
           padding: 7px 0;
+        }
+
+        label {
+          height: 25px;
         }
 
         input[type="file"]#file {
