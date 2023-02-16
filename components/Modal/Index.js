@@ -4,6 +4,7 @@ import Avatar from "../Avatar";
 import Devit from "../Devit";
 import { colors } from "../../styles/theme";
 import useUser from "../../hooks/useUser";
+import dynamic from "next/dynamic";
 import Loading from "../Loading";
 import { addDevit, uploadImage } from "../../firebase/client";
 import { getDownloadURL } from "firebase/storage";
@@ -18,9 +19,6 @@ import { db } from "../../firebase/client";
 import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "../../atoms/modalAtom";
 import Router from "next/router";
-//Iconos
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
 import UploadImageIcon from "../Icons/UploadImageIcon";
 import EmojiIcon from "../Icons/EmojiIcon";
 import LenghtCount from "../LengthCount";
@@ -43,6 +41,13 @@ const DRAG_IMAGE_STATES = {
 };
 
 const Modal = () => {
+  const Picker = dynamic(
+    () => {
+      return import("emoji-picker-react");
+    },
+    { ssr: false }
+  );
+
   const user = useUser();
 
   const [isOpen, setIsOpen] = useRecoilState(modalState);
@@ -258,12 +263,7 @@ const Modal = () => {
                 ) : null}
               </div>
               {showPicker && (
-                <Picker
-                  perLine='6'
-                  data={data}
-                  onEmojiSelect={addEmoji}
-                  theme='light'
-                />
+                <Picker onEmojiClick={addEmoji} height={300} width='240px' />
               )}
               {imgURL ? (
                 <div className='remove-img'>

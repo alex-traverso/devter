@@ -6,9 +6,7 @@ import { addDevit, uploadImage } from "../../../firebase/client";
 import { getDownloadURL } from "firebase/storage";
 import Button from "../../../components/Button";
 import Avatar from "../../../components/Avatar";
-//Iconos
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
+import dynamic from "next/dynamic";
 
 //Router
 import Router from "next/router";
@@ -35,6 +33,13 @@ const DRAG_IMAGE_STATES = {
 };
 
 export default function ComposeTweet() {
+  const Picker = dynamic(
+    () => {
+      return import("emoji-picker-react");
+    },
+    { ssr: false }
+  );
+
   const user = useUser();
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState(COMPOSE_STATES.USER_NOT_KNOWN);
@@ -202,10 +207,10 @@ export default function ComposeTweet() {
                 percentage={message.length}
               />
             ) : null}
-            {showPicker && (
-              <Picker data={data} onEmojiSelect={addEmoji} theme='light' />
-            )}
           </div>
+          {showPicker && (
+            <Picker onEmojiClick={addEmoji} height={400} width='270px' />
+          )}
 
           {imgURL ? (
             <section className='remove-img'>
