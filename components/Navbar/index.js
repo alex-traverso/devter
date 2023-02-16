@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import Home from "../Icons/Home";
 import Search from "../Icons/Search";
 import Create from "../Icons/Create";
@@ -28,6 +27,7 @@ export default function Navbar() {
           width: 100%;
           height: 50px;
           background-color: #fff;
+          z-index: 100;
           display: flex;
           align-items: center;
           justify-content: space-around;
