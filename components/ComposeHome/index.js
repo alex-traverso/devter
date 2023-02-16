@@ -6,6 +6,9 @@ import { addDevit, uploadImage } from "../../firebase/client";
 import { getDownloadURL } from "firebase/storage";
 import Button from "../Button";
 import Avatar from "../Avatar";
+
+import LenghtCount from "../LengthCount";
+
 //Iconos
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
@@ -154,9 +157,6 @@ export default function ComposeHome() {
 
   return (
     <>
-      <Head>
-        <title>Crear un Devit / Devter</title>
-      </Head>
       <section className='form-container'>
         {user ? (
           <section className='avatar-container'>
@@ -173,7 +173,10 @@ export default function ComposeHome() {
             value={message}
             placeholder='¿Que está pasando?'
           ></textarea>
-          <p className='error-length'>{message.length}/140</p>
+          {/* <div className='length-container'>
+            
+          </div> */}
+          {/* <p className='error-length'>{message.length}/140</p> */}
           <div className='img-icon-container'>
             <label
               for='file'
@@ -190,6 +193,14 @@ export default function ComposeHome() {
               fill={colors.primary}
               onClick={() => setShowPicker((val) => !val)}
             />
+            {message ? (
+              <LenghtCount
+                height={25}
+                width={25}
+                strokeWidth={8}
+                percentage={message.length}
+              />
+            ) : null}
             {showPicker && (
               <Picker data={data} onEmojiSelect={addEmoji} theme='light' />
             )}
@@ -250,6 +261,10 @@ export default function ComposeHome() {
           padding: 7px 0;
         }
 
+        label {
+          height: 25px;
+        }
+
         input[type="file"]#file {
           width: 0.1px;
           height: 0.1px;
@@ -266,6 +281,10 @@ export default function ComposeHome() {
           width: 100%;
         }
 
+        .length-container {
+          margin-top: 1rem;
+          padding: 0;
+        }
         .avatar-container {
           margin: 16px 0 0 16px;
         }
