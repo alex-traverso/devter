@@ -18,6 +18,8 @@ const HomePage = () => {
   const [timeline, setTimeline] = useState([]);
   const user = useUser();
 
+  const [searchOpen, setSearchOpen] = useState(false);
+
   const [isOpen, setIsOpen] = useRecoilState(modalState);
   useEffect(() => {
     let unsubscribe;
