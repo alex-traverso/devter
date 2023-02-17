@@ -2,17 +2,16 @@ import { useEffect } from "react";
 import Head from "next/head";
 import Button from "../components/Button";
 import GitHub from "../components/Icons/Github";
+import GoogleIcon from "../components/Icons/GoogleIcon";
 import Logo from "../components/Icons/Logo";
 import Avatar from "../components/Avatar";
 import { colors } from "../styles/theme";
 import Loading from "../components/Loading";
-
 //  Firebase Client
 import { loginWithGithub } from "/firebase/client.js";
-
+import { loginWithGoogle } from "../firebase/client";
 //Hook useUser
 import useUser, { USER_STATES } from "../hooks/useUser";
-
 //Router
 import Router from "next/router";
 
@@ -22,8 +21,14 @@ export default function Home() {
     user && Router.replace("/home");
   }, [user]);
 
-  const handleClick = () => {
+  const logInGithub = () => {
     loginWithGithub().catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const logInGoogle = () => {
+    loginWithGoogle().catch((err) => {
       console.log(err);
     });
   };
@@ -44,10 +49,16 @@ export default function Home() {
         </h2>
         <div>
           {user === USER_STATES.NOT_LOGGED && (
-            <Button onClick={handleClick}>
-              <GitHub width={24} height={24} fill={"#fff"} />
-              Login with Github
-            </Button>
+            <div className='buttons-container'>
+              <Button onClick={logInGithub}>
+                <GitHub width={24} height={24} fill={"#fff"} />
+                Login with Github
+              </Button>
+              <Button onClick={logInGoogle}>
+                <GoogleIcon width={24} height={24} fill={"#fff"} />
+                Login with Google
+              </Button>
+            </div>
           )}
 
           {user && user.avatar && (
@@ -89,8 +100,10 @@ export default function Home() {
           text-align: center;
         }
 
-        .btn-container {
-          margin-top: 0.3rem;
+        .buttons-container {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
         }
 
         .avatar-loading-container {
