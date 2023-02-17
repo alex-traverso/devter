@@ -10,7 +10,7 @@ export default function Navbar() {
         <Link href='../home'>
           <Home stroke='#439ACF' height={40} width={40} />
         </Link>
-        <Link href='../compose/devit'>
+        <Link href='../searchDevits'>
           <Search stroke='#439ACF' height={40} width={40} />
         </Link>
         <Link href='../compose/devit'>
