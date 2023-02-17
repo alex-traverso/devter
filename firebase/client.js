@@ -12,6 +12,7 @@ import {
   getAuth,
   signInWithPopup,
   GithubAuthProvider,
+  GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
 import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
@@ -53,9 +54,16 @@ export const authChange = (onChange) => {
   });
 };
 
-export const loginWithGithub = () => {
+export const loginWithGithub = async () => {
   const provider = new GithubAuthProvider();
-  return signInWithPopup(auth, provider).then((response) => {
+  return await signInWithPopup(auth, provider).then((response) => {
+    return mapUserFromFirebaseAuthToUser(response);
+  });
+};
+
+export const loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  return await signInWithPopup(auth, provider).then((response) => {
     return mapUserFromFirebaseAuthToUser(response);
   });
 };
