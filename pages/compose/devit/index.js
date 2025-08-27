@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { colors } from "../../../styles/theme";
 import Head from "next/head";
+import TopBar from "../../../components/TopBar";
 import useUser from "../../../hooks/useUser";
 import { addDevit, uploadImage } from "../../../firebase/client";
 import { getDownloadURL } from "firebase/storage";
@@ -167,6 +168,7 @@ export default function ComposeTweet() {
       <Head>
         <title>Crear un Devit / Devter</title>
       </Head>
+      <TopBar title='Crear Devit' />
       <section className='form-container'>
         {user ? (
           <section className='avatar-container'>
