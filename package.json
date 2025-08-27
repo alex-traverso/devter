@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
-"engines": {
-  "node": "22.x"
-},
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
     "emoji-picker-react": "^4.4.7",
     "firebase": "^9.14.0",
